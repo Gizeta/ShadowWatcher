@@ -29,7 +29,7 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Horizontal" Grid.Column="0">
                             <TextBlock Text="&lt;"/>
-                            <TextBlock Text="{Binding Cost}"/>
+                            <TextBlock Text="{Binding CostText}"/>
                             <TextBlock Text="&gt;"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="5,0,0,0">

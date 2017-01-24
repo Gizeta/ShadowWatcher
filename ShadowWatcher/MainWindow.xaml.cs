@@ -76,12 +76,18 @@ namespace ShadowWatcher
                     foreach (var card in cards)
                     {
                         var info = card.Split(',');
-                        list.Add(new CardInfo
+                        var cardInfo = new CardInfo
                         {
                             ID = int.Parse(info[0]),
                             Name = info[1],
-                            Cost = int.Parse(info[2])
-                        });
+                            Cost = int.Parse(info[2]),
+                        };
+                        if (info.Length > 3)
+                        {
+                            cardInfo.Atk = int.Parse(info[3]);
+                            cardInfo.Life = int.Parse(info[4]);
+                        }
+                        list.Add(cardInfo);
                     }
                     str = $"PlayHand:{list.Select(e => e.Name).Aggregate((a, b) => $"{a},{b}")}";
 
@@ -165,6 +171,8 @@ namespace ShadowWatcher
     {
         public int ID { get; set; }
         public int Cost { get; set; }
+        public int? Atk { get; set; } = null;
+        public int? Life { get; set; } = null;
         public string Name { get; set; }
 
         private int amount = 1;
@@ -179,6 +187,11 @@ namespace ShadowWatcher
                     NotifyPropertyChanged();
                 }
             }
+        }
+
+        public string CostText
+        {
+            get { return $"{Cost}{(Atk.HasValue ? $",{Atk.Value},{Life.Value}" : "")}"; }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

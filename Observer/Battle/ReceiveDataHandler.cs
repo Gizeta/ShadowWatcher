@@ -4,6 +4,7 @@ using System.Linq;
 using Wizard;
 
 using BattleFinishStatus = TaskManager.BattleFinishStatus;
+using CharaType = CardBasePrm.CharaType;
 using NetworkDataURI = RealTimeNetworkBattleAgent.NetworkDataURI;
 using ReceiveData = NetworkBattleReceiver.ReceiveData;
 
@@ -63,7 +64,7 @@ namespace ShadowWatcher.Battle
                             var cardInfo = info as Dictionary<string, object>;
                             var cardId = cardInfo["card_id"].ToInt();
                             var cardParam = CardMaster.GetInstance().GetCardParameterFromId(cardId);
-                            str.Add($"{cardParam.CardId + (int)cardParam.CharType * 10000 + (int)cardParam.Clan * 100000},{cardParam.CardName},{cardParam.Cost}");
+                            str.Add($"{cardParam.CardId + (int)cardParam.CharType * 10000 + (int)cardParam.Clan * 100000},{cardParam.CardName},{cardParam.Cost}{(cardParam.CharType == CharaType.NORMAL ? $",{cardParam.Atk},{cardParam.Life}" : "")}");
                         }
                     }
                     Sender.Send($"PlayHand:{str.Aggregate((a, b) => $"{a};{b}")}");
