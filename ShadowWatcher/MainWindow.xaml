@@ -6,6 +6,10 @@
         xmlns:local="clr-namespace:ShadowWatcher"
         mc:Ignorable="d"
         Title="ShadowWatcher" Height="350" Width="333">
+    <Window.Resources>
+        <local:AmountToColorConverter x:Key="AmountToColor"/>
+    </Window.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -33,11 +37,11 @@
                             <TextBlock Text="&gt;"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="5,0,0,0">
-                            <TextBlock Text="{Binding Name}"/>
+                            <TextBlock Text="{Binding Name}" Foreground="{Binding Amount, Converter={StaticResource AmountToColor}}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Column="2">
-                            <TextBlock Text="×"/>
-                            <TextBlock Text="{Binding Amount}"/>
+                            <TextBlock Text="×" Foreground="{Binding Amount, Converter={StaticResource AmountToColor}}"/>
+                            <TextBlock Text="{Binding Amount}" Foreground="{Binding Amount, Converter={StaticResource AmountToColor}}"/>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
