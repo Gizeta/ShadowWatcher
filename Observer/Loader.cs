@@ -10,7 +10,7 @@ namespace ShadowWatcher
         public static void Load()
         {
             Unload();
-            
+
             rootObj.AddComponent<Observer>();
 
             Sender.Send("Load.");

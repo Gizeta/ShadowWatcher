@@ -1,4 +1,5 @@
 ﻿using ShadowWatcher.Battle;
+using System;
 using UnityEngine;
 
 namespace ShadowWatcher
@@ -9,7 +10,14 @@ namespace ShadowWatcher
 
         public void LateUpdate()
         {
-            battleManager.Poll();
+            try
+            {
+                battleManager.Loop();
+            }
+            catch(Exception e)
+            {
+                Sender.Send($"Error:{e.Message}");
+            }
         }
     }
 }

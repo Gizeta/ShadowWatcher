@@ -96,7 +96,7 @@ namespace ShadowWatcher
                         List.Add(list);
                     });
                     break;
-                case "Ready":
+                case "BattleReady":
                     str = action;
 
                     Dispatcher.Invoke(() =>
@@ -108,13 +108,10 @@ namespace ShadowWatcher
                 case "Unload":
                 case "Win":
                 case "Lose":
-                case "OppoDisconnect":
                     str = action;
                     break;
-                case "Error":
-                    str = $"{action}: {data}";
-                    break;
                 default:
+                    str = $"{action}:{data}";
                     break;
             }
             Dispatcher.Invoke(() =>
