@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Wizard;
 using BattleFinishStatus = TaskManager.BattleFinishStatus;
 using NetworkDataURI = RealTimeNetworkBattleAgent.NetworkDataURI;
@@ -39,6 +40,26 @@ namespace ShadowWatcher.Battle
                             break;
                     }
                     break;
+#if DEBUG
+                case NetworkDataURI.PlayHand:
+                case NetworkDataURI.PlayHandActions:
+                    var str = new List<string>();
+                    if (dict.ContainsKey("knownList"))
+                    {
+                        var list = dict["knownList"] as List<Object>;
+                        foreach (var info in list)
+                        {
+                            var cardInfo = info as Dictionary<string, object>;
+                            var cardId = cardInfo["card_id"].ToInt();
+                            str.Add(CardMaster.GetInstance().GetCardParameterFromId(cardId).CardName);
+                        }
+                    }
+                    Sender.Send($"PlayHand:{str.Aggregate((a, b) => $"{a},{b}")}");
+                    break;
+                default:
+                    Sender.Send($"ReceiveMsg:{uri.ToString()}");
+                    break;
+#endif
             }
         };
 
