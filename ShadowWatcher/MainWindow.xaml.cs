@@ -57,14 +57,6 @@ namespace ShadowWatcher
             isAttached = false;
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            if (!isAttached)
-                attachObserver();
-            else
-                detachObserver();
-        }
-
         private void Receiver_OnReceived(string action, string data)
         {
             var str = "";
@@ -118,6 +110,20 @@ namespace ShadowWatcher
             {
                 LogText.Text = $"{str}\r\n{LogText.Text}";
             });
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            if (!isAttached)
+                attachObserver();
+            else
+                detachObserver();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (isAttached)
+                detachObserver();
         }
     }
 

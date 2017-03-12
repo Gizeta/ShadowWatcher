@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShadowWatcher"
         mc:Ignorable="d"
-        Title="ShadowWatcher" Height="350" Width="250">
+        Title="ShadowWatcher" Height="350" Width="250"
+        Closed="Window_Closed">
     <Window.Resources>
         <local:AmountToColorConverter x:Key="AmountToColor"/>
     </Window.Resources>
