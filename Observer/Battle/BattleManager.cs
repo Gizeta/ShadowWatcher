@@ -6,6 +6,7 @@ namespace ShadowWatcher.Battle
     {
         private GameMgr gameMgr = GameMgr.GetIns();
         private static RealTimeNetworkBattleAgent agent;
+        private PlayerMonitor playerMon = new PlayerMonitor();
         private ReceiverMonitor receiverMon;
 
         public void Loop()
@@ -16,6 +17,12 @@ namespace ShadowWatcher.Battle
                 {
                     agent = ToolboxGame.RealTimeNetworkBattle;
                     receiverMon = new ReceiverMonitor(agent);
+                }
+
+                var battleMgr = agent.GetBattleManager();
+                if (battleMgr != null)
+                {
+                    playerMon.CheckReference(battleMgr.BattlePlayer, battleMgr.BattleEnemy);
                 }
             }
         }

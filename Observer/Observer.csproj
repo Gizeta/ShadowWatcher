@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Battle\BattleHelper.cs" />
     <Compile Include="Battle\BattleManager.cs" />
+    <Compile Include="Battle\PlayerMonitor.cs" />
     <Compile Include="Battle\ReceiverMonitor.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Observer.cs" />
