@@ -5,61 +5,68 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShadowWatcher"
         mc:Ignorable="d"
-        Title="ShadowWatcher" Height="350" Width="333">
+        Title="ShadowWatcher" Height="350" Width="250">
     <Window.Resources>
         <local:AmountToColorConverter x:Key="AmountToColor"/>
     </Window.Resources>
     
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="160" />
-            <ColumnDefinition Width="3" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="3" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ItemsControl ItemsSource="{Binding List}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Orientation="Horizontal" Grid.Column="0">
-                            <TextBlock Text="&lt;"/>
-                            <TextBlock Text="{Binding CostText}"/>
-                            <TextBlock Text="&gt;"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="5,0,0,0">
-                            <TextBlock Text="{Binding Name}" Foreground="{Binding Amount, Converter={StaticResource AmountToColor}}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Column="2">
-                            <TextBlock Text="×" Foreground="{Binding Amount, Converter={StaticResource AmountToColor}}"/>
-                            <TextBlock Text="{Binding Amount}" Foreground="{Binding Amount, Converter={StaticResource AmountToColor}}"/>
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.Template>
-                <ControlTemplate TargetType="ItemsControl">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <ItemsPresenter/>
-                    </ScrollViewer>
-                </ControlTemplate>
-            </ItemsControl.Template>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
-        <Button Content="Attach/Detach" Grid.Column="2" Grid.Row="0" Width="160" Height="40" Click="button_Click"/>
-        <TextBox x:Name="LogText" Grid.Column="2" Grid.Row="2"/>
+        <Grid>
+            <TabControl>
+                <TabItem Header="Enemy">
+                    <ItemsControl ItemsSource="{Binding List}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal" Grid.Column="0">
+                                        <TextBlock Text="&lt;"/>
+                                        <TextBlock Text="{Binding CostText}"/>
+                                        <TextBlock Text="&gt;"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="5,0,0,0">
+                                        <TextBlock Text="{Binding Name}" Foreground="{Binding Amount, Converter={StaticResource AmountToColor}}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                        <TextBlock Text="×" Foreground="{Binding Amount, Converter={StaticResource AmountToColor}}"/>
+                                        <TextBlock Text="{Binding Amount}" Foreground="{Binding Amount, Converter={StaticResource AmountToColor}}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.Template>
+                            <ControlTemplate TargetType="ItemsControl">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ItemsPresenter/>
+                                </ScrollViewer>
+                            </ControlTemplate>
+                        </ItemsControl.Template>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </TabItem>
+                <TabItem Header="Log">
+                    <TextBox x:Name="LogText"/>
+                </TabItem>
+            </TabControl>
+        </Grid>
+        
+        <Button Content="Attach/Detach" Grid.Row="1" Width="100" Height="30" Margin="10" Click="button_Click"/>
+        
     </Grid>
 </Window>
