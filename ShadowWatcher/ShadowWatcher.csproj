@@ -55,6 +55,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AmountToColorConverter.cs" />
+    <Compile Include="CardList.cs" />
     <Compile Include="Receiver.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

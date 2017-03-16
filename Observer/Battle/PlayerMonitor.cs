@@ -1,4 +1,7 @@
-﻿namespace ShadowWatcher.Battle
+﻿using CardParameter = Wizard.CardMaster.CardParameter;
+using CharaType = CardBasePrm.CharaType;
+
+namespace ShadowWatcher.Battle
 {
     public class PlayerMonitor
     {
@@ -49,9 +52,10 @@
 
         private void Enemy_OnAddHandCardEvent(BattleCardBase obj)
         {
-            if (obj.IsTokenLoad)
+            if (obj.IsTokenLoad && !obj.IsInDeck)
             {
-                Sender.Send($"EnemyAdd:{obj.BaseParameter.CardName}");
+                var param = obj.BaseParameter;
+                Sender.Send($"EnemyAdd:{convertCardId(param)},{param.CardName},{obj.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
             }
 #if DEBUG
             else
@@ -65,7 +69,8 @@
         {
             if (obj.IsInHand || obj.IsInDeck)
             {
-                Sender.Send($"EnemyPlay:{obj.BaseParameter.CardName}");
+                var param = obj.BaseParameter;
+                Sender.Send($"EnemyPlay:{convertCardId(param)},{param.CardName},{param.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
             }
 #if DEBUG
             else
@@ -79,7 +84,8 @@
         {
             if (obj.IsInHand || obj.IsInDeck)
             {
-                Sender.Send($"EnemyPlay:{obj.BaseParameter.CardName}");
+                var param = obj.BaseParameter;
+                Sender.Send($"EnemyPlay:{convertCardId(param)},{param.CardName},{param.Cost}");
             }
 #if DEBUG
             else
@@ -109,5 +115,11 @@
         }
 
         #endregion
+
+        private int convertCardId(CardParameter card)
+        {
+            var isClass = card.Clan > 0 && (int)card.Clan < 8;
+            return (card.CardId / 10) % 100000000 + ((int)card.CharType + (isClass ? 1 : 0) * 10) * 100000000;
+        }
     }
 }
