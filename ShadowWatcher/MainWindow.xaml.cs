@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 
@@ -8,7 +9,8 @@ namespace ShadowWatcher
     {
         private bool isAttached = false;
 
-        public CardList List { get; set; } = new CardList();
+        public CardList EnemyDeckList { get; set; } = new CardList();
+        public CardList PlayerDeckList { get; set; } = new CardList();
 
         public MainWindow()
         {
@@ -58,7 +60,8 @@ namespace ShadowWatcher
                 case "BattleReady":
                     Dispatcher.Invoke(() =>
                     {
-                        List.Clear();
+                        EnemyDeckList.Clear();
+                        PlayerDeckList.Clear();
                     });
                     break;
                 case "Load":
@@ -67,12 +70,14 @@ namespace ShadowWatcher
                 case "Lose":
                     break;
                 case "EnemyPlay":
+                case "EnemyAdd":
                     var info = data.Split(',');
                     var cardInfo = new CardInfo
                     {
                         ID = int.Parse(info[0]),
-                        Name = info[0] + info[1],
+                        Name = info[1],
                         Cost = int.Parse(info[2]),
+                        Amount = action == "EnemyPlay" ? 1 : -1,
                     };
                     if (info.Length > 3)
                     {
@@ -82,10 +87,35 @@ namespace ShadowWatcher
 
                     Dispatcher.Invoke(() =>
                     {
-                        List.Add(cardInfo);
+                        EnemyDeckList.Add(cardInfo);
                     });
                     break;
-                case "EnemyAdd":
+                case "PlayerDeck":
+                    var cardList = new List<CardInfo>();
+                    var cards = data.Split(';');
+                    foreach (var card in cards)
+                    {
+                        info = card.Split(',');
+                        cardInfo = new CardInfo
+                        {
+                            ID = int.Parse(info[0]),
+                            Name = info[1],
+                            Cost = int.Parse(info[2]),
+                        };
+                        if (info.Length > 3)
+                        {
+                            cardInfo.Atk = int.Parse(info[3]);
+                            cardInfo.Life = int.Parse(info[4]);
+                        }
+                        cardList.Add(cardInfo);
+                    }                    
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        PlayerDeckList.Add(cardList);
+                    });
+                    break;
+                case "PlayerDraw":
                     info = data.Split(',');
                     cardInfo = new CardInfo
                     {
@@ -102,7 +132,7 @@ namespace ShadowWatcher
 
                     Dispatcher.Invoke(() =>
                     {
-                        List.Add(cardInfo);
+                        PlayerDeckList.Add(cardInfo);
                     });
                     break;
             }

@@ -1,4 +1,6 @@
-﻿using CardParameter = Wizard.CardMaster.CardParameter;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CardParameter = Wizard.CardMaster.CardParameter;
 using CharaType = CardBasePrm.CharaType;
 
 namespace ShadowWatcher.Battle
@@ -7,14 +9,16 @@ namespace ShadowWatcher.Battle
     {
         private static BattleEnemy _enemy;
         private static BattlePlayer _player;
+        private static bool _hasPlayerDrawn = false;
         
         public void CheckReference(BattlePlayer player, BattleEnemy enemy)
         {
             if (_player != player)
             {
-                //if (_player != null) unbindPlayerEvent();
+                if (_player != null) unbindPlayerEvent();
                 _player = player;
-                //bindPlayerEvent();
+                _hasPlayerDrawn = false;
+                bindPlayerEvent();
             }
             if (_enemy != enemy)
             {
@@ -27,11 +31,13 @@ namespace ShadowWatcher.Battle
         private void bindPlayerEvent()
         {
             _player.OnAddHandCardEvent += Player_OnAddHandCardEvent;
-        }        
+            _player.OnMulliganEnd += Player_OnMulliganEnd;
+        }
 
         private void unbindPlayerEvent()
         {
             _player.OnAddHandCardEvent -= Player_OnAddHandCardEvent;
+            _player.OnMulliganEnd -= Player_OnMulliganEnd;
         }
 
         private void bindEnemyEvent()
@@ -101,17 +107,29 @@ namespace ShadowWatcher.Battle
 
         private void Player_OnAddHandCardEvent(BattleCardBase obj)
         {
-            if (obj.IsOnDraw)
+            if (obj.IsInDeck && _hasPlayerDrawn)
             {
-                if (obj.IsTokenLoad)
-                {
-                    Sender.Send($"PlayerAdd:{obj.BaseParameter.CardName}");
-                }
-                else
-                {
-                    Sender.Send($"PlayerDraw:{obj.BaseParameter.CardName}");
-                }
+                var param = obj.BaseParameter;
+                Sender.Send($"PlayerDraw:{convertCardId(param)},{param.CardName},{param.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
             }
+#if DEBUG
+            else
+            {
+                Sender.Send($"PlayerAddHand:{obj.BaseParameter.CardName}");
+            }
+#endif
+        }
+
+        private void Player_OnMulliganEnd(IEnumerable<BattleCardBase> arg1, IEnumerable<int> arg2)
+        {
+            var cardList = new List<string>();
+            foreach (var card in _player.DeckCardList)
+            {
+                var param = card.BaseParameter;
+                cardList.Add($"{convertCardId(param)},{param.CardName},{param.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
+            }
+            Sender.Send($"PlayerDeck:{cardList.Aggregate((sum, s) => $"{sum};{s}")}");
+            _hasPlayerDrawn = true;
         }
 
         #endregion

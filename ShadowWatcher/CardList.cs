@@ -28,6 +28,24 @@ namespace ShadowWatcher
             }
         }
 
+        public void Add(IEnumerable<CardInfo> elems)
+        {
+            foreach (var card in elems)
+            {
+                if (list.Contains(card))
+                {
+                    list.Find(e => e == card).Amount += card.Amount;
+                }
+                else
+                {
+                    list.Add(card);
+                }
+            }
+
+            list.Sort();
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+
         public void Clear()
         {
             list.Clear();
@@ -64,7 +82,12 @@ namespace ShadowWatcher
 
         public string CostText
         {
-            get { return $"<{Cost}{(Atk.HasValue ? $",{Atk.Value},{Life.Value}" : "")}>"; }
+            get { return $"<{Cost}>"; }
+        }
+
+        public string NameText
+        {
+            get { return $"{(Atk.HasValue ? $"({Atk.Value},{Life.Value})" : "")}{Name}"; }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
