@@ -8,6 +8,18 @@ namespace ShadowWatcher
     {
         private BattleManager battleManager = new BattleManager();
 
+        public void Awake()
+        {
+            Sender.Initialize();
+            Sender.Send("Load.");
+        }
+
+        public void OnDestroy()
+        {
+            Sender.Send("Unload.");
+            Sender.Destroy();
+        }
+
         public void LateUpdate()
         {
             try

@@ -12,8 +12,6 @@ namespace ShadowWatcher
             Unload();
 
             rootObj.AddComponent<Observer>();
-
-            Sender.Send("Load.");
         }
 
         public static void Unload()
@@ -23,8 +21,6 @@ namespace ShadowWatcher
             {
                 Object.DestroyObject(observer);
             }
-
-            Sender.Send("Unload.");
         }
     }
 }
