@@ -61,7 +61,6 @@ namespace ShadowWatcher
                     Dispatcher.Invoke(() =>
                     {
                         EnemyDeckList.Clear();
-                        PlayerDeckList.Clear();
                     });
                     break;
                 case "Load":
@@ -112,6 +111,7 @@ namespace ShadowWatcher
 
                     Dispatcher.Invoke(() =>
                     {
+                        PlayerDeckList.Clear();
                         PlayerDeckList.Add(cardList);
                     });
                     break;
