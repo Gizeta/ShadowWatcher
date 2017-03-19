@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Wizard.Battle.Mulligan;
 using CardParameter = Wizard.CardMaster.CardParameter;
 using CharaType = CardBasePrm.CharaType;
 
@@ -9,34 +10,32 @@ namespace ShadowWatcher.Battle
     {
         private static BattleEnemy _enemy;
         private static BattlePlayer _player;
+        private static IMulliganMgr _mulliganMgr;
         private static bool _hasPlayerDrawn = false;
         
-        public void CheckReference(BattlePlayer player, BattleEnemy enemy)
+        public void CheckReference(BattlePlayer player, BattleEnemy enemy, IMulliganMgr mulliganMgr)
         {
-            if (_player != player)
+            if (player != null && _player != player)
             {
                 _player = player;
                 _hasPlayerDrawn = false;
-                bindPlayerEvent();
+
+                _player.OnAddHandCardEvent += Player_OnAddHandCardEvent;
             }
-            if (_enemy != enemy)
+            if (enemy != null && _enemy != enemy)
             {
                 _enemy = enemy;
-                bindEnemyEvent();
+
+                _enemy.OnAddHandCardEvent += Enemy_OnAddHandCardEvent;
+                _enemy.OnAddPlayCardEvent += Enemy_OnAddPlayCardEvent;
+                _enemy.OnSpellPlayEvent += Enemy_OnSpellPlayEvent;
             }
-        }
+            if (mulliganMgr != null && _mulliganMgr != mulliganMgr)
+            {
+                _mulliganMgr = mulliganMgr;
 
-        private void bindPlayerEvent()
-        {
-            _player.OnAddHandCardEvent += Player_OnAddHandCardEvent;
-            _player.OnMulliganEnd += Player_OnMulliganEnd;
-        }
-
-        private void bindEnemyEvent()
-        {
-            _enemy.OnAddHandCardEvent += Enemy_OnAddHandCardEvent;
-            _enemy.OnAddPlayCardEvent += Enemy_OnAddPlayCardEvent;
-            _enemy.OnSpellPlayEvent += Enemy_OnSpellPlayEvent;
+                _mulliganMgr.OnSubmit += MulliganMgr_OnSubmit;
+            }
         }
 
         #region BattleEnemy Events
@@ -105,7 +104,11 @@ namespace ShadowWatcher.Battle
 #endif
         }
 
-        private void Player_OnMulliganEnd(IEnumerable<BattleCardBase> arg1, IEnumerable<int> arg2)
+        #endregion
+
+        #region MulliganMgr Event
+
+        private void MulliganMgr_OnSubmit()
         {
             var cardList = new List<string>();
             foreach (var card in _player.DeckCardList)

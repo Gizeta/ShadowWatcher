@@ -22,7 +22,7 @@ namespace ShadowWatcher.Battle
                 var battleMgr = agent.GetBattleManager();
                 if (battleMgr != null)
                 {
-                    playerMon.CheckReference(battleMgr.BattlePlayer, battleMgr.BattleEnemy);
+                    playerMon.CheckReference(battleMgr.BattlePlayer, battleMgr.BattleEnemy, battleMgr.m_MulliganMgr);
                 }
             }
         }
