@@ -15,14 +15,12 @@ namespace ShadowWatcher.Battle
         {
             if (_player != player)
             {
-                if (_player != null) unbindPlayerEvent();
                 _player = player;
                 _hasPlayerDrawn = false;
                 bindPlayerEvent();
             }
             if (_enemy != enemy)
             {
-                if (_enemy != null) unbindEnemyEvent();
                 _enemy = enemy;
                 bindEnemyEvent();
             }
@@ -34,24 +32,11 @@ namespace ShadowWatcher.Battle
             _player.OnMulliganEnd += Player_OnMulliganEnd;
         }
 
-        private void unbindPlayerEvent()
-        {
-            _player.OnAddHandCardEvent -= Player_OnAddHandCardEvent;
-            _player.OnMulliganEnd -= Player_OnMulliganEnd;
-        }
-
         private void bindEnemyEvent()
         {
             _enemy.OnAddHandCardEvent += Enemy_OnAddHandCardEvent;
             _enemy.OnAddPlayCardEvent += Enemy_OnAddPlayCardEvent;
             _enemy.OnSpellPlayEvent += Enemy_OnSpellPlayEvent;
-        }
-
-        private void unbindEnemyEvent()
-        {
-            _enemy.OnAddHandCardEvent -= Enemy_OnAddHandCardEvent;
-            _enemy.OnAddPlayCardEvent -= Enemy_OnAddPlayCardEvent;
-            _enemy.OnSpellPlayEvent -= Enemy_OnSpellPlayEvent;
         }
 
         #region BattleEnemy Events

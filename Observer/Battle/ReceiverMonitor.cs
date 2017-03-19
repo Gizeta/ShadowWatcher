@@ -9,9 +9,12 @@ namespace ShadowWatcher.Battle
 {
     public class ReceiverMonitor
     {
-        private static Action<Dictionary<string, object>> _onReceivedEvent;
+        public ReceiverMonitor(RealTimeNetworkBattleAgent agent)
+        {
+            agent.OnReceivedEvent += receivedHandler;
+        }
 
-        private static readonly Action<Dictionary<string, object>> receivedHandler = (dict) =>
+        private void receivedHandler(Dictionary<string, object> dict)
         {
             var uri = (NetworkDataURI)Enum.Parse(typeof(NetworkDataURI), dict["uri"].ToString());
 
@@ -61,13 +64,6 @@ namespace ShadowWatcher.Battle
                     break;
 #endif
             }
-        };
-
-        public ReceiverMonitor(RealTimeNetworkBattleAgent agent)
-        {
-            if (_onReceivedEvent != null) _onReceivedEvent -= receivedHandler;
-            agent.OnReceivedEvent += receivedHandler;
-            _onReceivedEvent = agent.OnReceivedEvent;
         }
     }
 }
