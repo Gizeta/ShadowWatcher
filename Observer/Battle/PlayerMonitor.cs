@@ -92,7 +92,7 @@ namespace ShadowWatcher.Battle
 
         private void Player_OnAddHandCardEvent(BattleCardBase card, NetworkCardPlaceState fromState)
         {
-            if (card.IsInDeck && _hasPlayerDrawn)
+            if (fromState == NetworkCardPlaceState.Stock && _hasPlayerDrawn)
             {
                 var param = card.BaseParameter;
                 Sender.Send($"PlayerDraw:{convertCardId(param)},{param.CardName},{param.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
