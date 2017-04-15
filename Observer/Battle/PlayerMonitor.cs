@@ -3,6 +3,7 @@ using System.Linq;
 using Wizard.Battle.Mulligan;
 using CardParameter = Wizard.CardMaster.CardParameter;
 using CharaType = CardBasePrm.CharaType;
+using NetworkCardPlaceState = RealTimeNetworkBattleAgent.NetworkCardPlaceState;
 
 namespace ShadowWatcher.Battle
 {
@@ -40,18 +41,19 @@ namespace ShadowWatcher.Battle
 
         #region BattleEnemy Events
 
-        private void Enemy_OnAddHandCardEvent(BattleCardBase obj)
+        private void Enemy_OnAddHandCardEvent(BattleCardBase card, NetworkCardPlaceState fromState)
         {
-            if (obj.IsTokenLoad && !obj.IsInDeck)
+            if (card.IsTokenLoad && !card.IsInDeck)
             {
-                var param = obj.BaseParameter;
-                Sender.Send($"EnemyAdd:{convertCardId(param)},{param.CardName},{obj.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
+                var param = card.BaseParameter;
+                Sender.Send($"EnemyAdd:{convertCardId(param)},{param.CardName},{card.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
             }
 #if DEBUG
             else
             {
-                Sender.Send($"EnemyAddHandCard:{obj.BaseParameter.CardName}");
+                Sender.Send($"EnemyAddHandCard:{card.BaseParameter.CardName}");
             }
+            Sender.Send($"EnemyAddHandCardFromState:{fromState.ToString()}");
 #endif
         }
 
@@ -89,18 +91,19 @@ namespace ShadowWatcher.Battle
 
         #region BattlePlayer Events
 
-        private void Player_OnAddHandCardEvent(BattleCardBase obj)
+        private void Player_OnAddHandCardEvent(BattleCardBase card, NetworkCardPlaceState fromState)
         {
-            if (obj.IsInDeck && _hasPlayerDrawn)
+            if (card.IsInDeck && _hasPlayerDrawn)
             {
-                var param = obj.BaseParameter;
+                var param = card.BaseParameter;
                 Sender.Send($"PlayerDraw:{convertCardId(param)},{param.CardName},{param.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
             }
 #if DEBUG
             else
             {
-                Sender.Send($"PlayerAddHand:{obj.BaseParameter.CardName}");
+                Sender.Send($"PlayerAddHand:{card.BaseParameter.CardName}");
             }
+            Sender.Send($"PlayerAddHandCardFromState:{fromState.ToString()}");
 #endif
         }
 
