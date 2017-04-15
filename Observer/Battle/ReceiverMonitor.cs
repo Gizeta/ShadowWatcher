@@ -31,7 +31,7 @@ namespace ShadowWatcher.Battle
                         Sender.Send("Lose.");
                     break;
                 case NetworkDataURI.BattleFinish:
-                    switch (ToolboxGame.RealTimeNetworkBattle.GetBattleManager().InvokeJudgeCurrentFinishStatus())
+                    switch (ToolboxGame.RealTimeNetworkBattle.GetBattleManager().JudgeCurrentFinishStatus())
                     {
                         case BattleFinishStatus.Life_Win:
                         case BattleFinishStatus.ShortageDeck_Win:
