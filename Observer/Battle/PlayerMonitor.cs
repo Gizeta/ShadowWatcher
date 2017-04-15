@@ -22,6 +22,7 @@ namespace ShadowWatcher.Battle
                 _hasPlayerDrawn = false;
 
                 _player.OnAddHandCardEvent += Player_OnAddHandCardEvent;
+                _player.OnAddPlayCardEvent += Player_OnAddPlayCardEvent;
             }
             if (enemy != null && _enemy != enemy)
             {
@@ -101,6 +102,21 @@ namespace ShadowWatcher.Battle
             else
             {
                 Sender.Send($"PlayerAddHand:{card.BaseParameter.CardName},{fromState.ToString()}");
+            }
+#endif
+        }
+
+        private void Player_OnAddPlayCardEvent(BattleCardBase card)
+        {
+            if (card.IsInDeck)
+            {
+                var param = card.BaseParameter;
+                Sender.Send($"PlayerDraw:{convertCardId(param)},{param.CardName},{param.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
+            }
+#if DEBUG
+            else
+            {
+                Sender.Send($"PlayerPlayCard:{card.BaseParameter.CardName}");
             }
 #endif
         }
