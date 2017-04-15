@@ -43,7 +43,7 @@ namespace ShadowWatcher.Battle
 
         private void Enemy_OnAddHandCardEvent(BattleCardBase card, NetworkCardPlaceState fromState)
         {
-            if (card.IsTokenLoad && !card.IsInDeck)
+            if (fromState == NetworkCardPlaceState.None)
             {
                 var param = card.BaseParameter;
                 Sender.Send($"EnemyAdd:{convertCardId(param)},{param.CardName},{card.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
@@ -51,9 +51,8 @@ namespace ShadowWatcher.Battle
 #if DEBUG
             else
             {
-                Sender.Send($"EnemyAddHandCard:{card.BaseParameter.CardName}");
+                Sender.Send($"EnemyAddHandCard:{card.BaseParameter.CardName},{fromState.ToString()}");
             }
-            Sender.Send($"EnemyAddHandCardFromState:{fromState.ToString()}");
 #endif
         }
 
@@ -101,9 +100,8 @@ namespace ShadowWatcher.Battle
 #if DEBUG
             else
             {
-                Sender.Send($"PlayerAddHand:{card.BaseParameter.CardName}");
+                Sender.Send($"PlayerAddHand:{card.BaseParameter.CardName},{fromState.ToString()}");
             }
-            Sender.Send($"PlayerAddHandCardFromState:{fromState.ToString()}");
 #endif
         }
 
