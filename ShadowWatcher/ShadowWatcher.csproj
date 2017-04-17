@@ -104,6 +104,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="injector\README.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="injector\mono-assembly-injector.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

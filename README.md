@@ -19,3 +19,7 @@ Shadowverse 辅助工(wán)具(jù)
 1. 本程序会监听网络接收信息及玩家操作回调，对于是否为外挂的问题，请自行判断。
 2. Debug 版本为了调试方便，会抓取并显示一些常规游玩中获取不到的信息，请谨慎分发 Debug 版本的二进制文件。
 3. 如果有好的建议、意见或界面设计，欢迎提交 Issue 或 Pull Request。
+
+## 感谢
+* [mono-assembly-injector](https://github.com/gamebooster/mono-assembly-injector)
+* [Blackbone](https://github.com/DarthTon/Blackbone)
