@@ -141,8 +141,8 @@ namespace ShadowWatcher.Battle
 
         private int convertCardId(CardParameter card)
         {
-            var isClass = card.Clan > 0 && (int)card.Clan < 8;
-            return (card.CardId / 10) % 100000000 + ((int)card.CharType + (isClass ? 1 : 0) * 10) * 100000000;
+            var d = card.CardId.ToString();
+            return int.Parse($"{d[3]}{d[5]}{d[2]}{d[6]}{d[7]}");
         }
     }
 }
