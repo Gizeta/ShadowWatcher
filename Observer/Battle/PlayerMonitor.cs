@@ -44,7 +44,7 @@ namespace ShadowWatcher.Battle
 
         private void Enemy_OnAddHandCardEvent(BattleCardBase card, NetworkCardPlaceState fromState)
         {
-            if (fromState == NetworkCardPlaceState.None)
+            if (fromState == NetworkCardPlaceState.None || fromState == NetworkCardPlaceState.Field)
             {
                 var param = card.BaseParameter;
                 Sender.Send($"EnemyAdd:{convertCardId(param)},{param.CardName},{card.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
