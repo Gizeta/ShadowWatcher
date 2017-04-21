@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Wizard.Battle.Mulligan;
 using CardParameter = Wizard.CardMaster.CardParameter;
 using CharaType = CardBasePrm.CharaType;
 using NetworkCardPlaceState = RealTimeNetworkBattleAgent.NetworkCardPlaceState;
@@ -11,10 +10,9 @@ namespace ShadowWatcher.Battle
     {
         private static BattleEnemy _enemy;
         private static BattlePlayer _player;
-        private static IMulliganMgr _mulliganMgr;
         private static bool _hasPlayerDrawn = false;
         
-        public void CheckReference(BattlePlayer player, BattleEnemy enemy, IMulliganMgr mulliganMgr)
+        public void CheckReference(BattlePlayer player, BattleEnemy enemy)
         {
             if (player != null && _player != player)
             {
@@ -31,12 +29,6 @@ namespace ShadowWatcher.Battle
                 _enemy.OnAddHandCardEvent += Enemy_OnAddHandCardEvent;
                 _enemy.OnAddPlayCardEvent += Enemy_OnAddPlayCardEvent;
                 _enemy.OnSpellPlayEvent += Enemy_OnSpellPlayEvent;
-            }
-            if (mulliganMgr != null && _mulliganMgr != mulliganMgr)
-            {
-                _mulliganMgr = mulliganMgr;
-
-                _mulliganMgr.OnSubmit += MulliganMgr_OnSubmit;
             }
         }
 
@@ -93,7 +85,31 @@ namespace ShadowWatcher.Battle
 
         private void Player_OnAddHandCardEvent(BattleCardBase card, NetworkCardPlaceState fromState)
         {
-            if (fromState == NetworkCardPlaceState.Stock && _hasPlayerDrawn)
+            if (!_hasPlayerDrawn && _player.Turn == 0)
+            {
+                var cardList = new List<string>();
+                foreach (var c in _player.DeckCardList)
+                {
+                    var p = c.BaseParameter;
+                    cardList.Add($"{convertCardId(p)},{p.CardName},{p.Cost}{(p.CharType == CharaType.NORMAL ? $",{p.Atk},{p.Life}" : "")}");
+                }
+                var param = card.BaseParameter;
+                cardList.Add($"{convertCardId(param)},{param.CardName},{param.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
+                Sender.Send($"PlayerDeck:{cardList.Aggregate((sum, s) => $"{sum};{s}")}");
+
+                _hasPlayerDrawn = true;
+            }
+            else if (fromState == NetworkCardPlaceState.Stock && _player.Turn == 1)
+            {
+                foreach (var c in _player.HandCardList)
+                {
+                    var p = c.BaseParameter;
+                    Sender.Send($"PlayerDraw:{convertCardId(p)},{p.CardName},{p.Cost}{(p.CharType == CharaType.NORMAL ? $",{p.Atk},{p.Life}" : "")}");
+                }
+                var param = card.BaseParameter;
+                Sender.Send($"PlayerDraw:{convertCardId(param)},{param.CardName},{param.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
+            }
+            else if (fromState == NetworkCardPlaceState.Stock && _player.Turn > 1)
             {
                 var param = card.BaseParameter;
                 Sender.Send($"PlayerDraw:{convertCardId(param)},{param.CardName},{param.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
@@ -119,22 +135,6 @@ namespace ShadowWatcher.Battle
                 Sender.Send($"PlayerPlayCard:{card.BaseParameter.CardName}");
             }
 #endif
-        }
-
-        #endregion
-
-        #region MulliganMgr Event
-
-        private void MulliganMgr_OnSubmit()
-        {
-            var cardList = new List<string>();
-            foreach (var card in _player.DeckCardList)
-            {
-                var param = card.BaseParameter;
-                cardList.Add($"{convertCardId(param)},{param.CardName},{param.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
-            }
-            Sender.Send($"PlayerDeck:{cardList.Aggregate((sum, s) => $"{sum};{s}")}");
-            _hasPlayerDrawn = true;
         }
 
         #endregion
