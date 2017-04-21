@@ -38,8 +38,7 @@ namespace ShadowWatcher.Battle
         {
             if (fromState == NetworkCardPlaceState.None || fromState == NetworkCardPlaceState.Field)
             {
-                var param = card.BaseParameter;
-                Sender.Send($"EnemyAdd:{convertCardId(param)},{param.CardName},{card.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
+                Sender.Send($"EnemyAdd:{getCardInfo(card, true)}");
             }
 #if DEBUG
             else
@@ -49,32 +48,30 @@ namespace ShadowWatcher.Battle
 #endif
         }
 
-        private void Enemy_OnAddPlayCardEvent(BattleCardBase obj)
+        private void Enemy_OnAddPlayCardEvent(BattleCardBase card)
         {
-            if (obj.IsInHand || obj.IsInDeck)
+            if (card.IsInHand || card.IsInDeck)
             {
-                var param = obj.BaseParameter;
-                Sender.Send($"EnemyPlay:{convertCardId(param)},{param.CardName},{param.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
+                Sender.Send($"EnemyPlay:{getCardInfo(card)}");
             }
 #if DEBUG
             else
             {
-                Sender.Send($"EnemyPlayCard:{obj.BaseParameter.CardName}");
+                Sender.Send($"EnemyPlayCard:{card.BaseParameter.CardName}");
             }
 #endif
         }
 
-        private void Enemy_OnSpellPlayEvent(BattleCardBase obj)
+        private void Enemy_OnSpellPlayEvent(BattleCardBase card)
         {
-            if (obj.IsInHand || obj.IsInDeck)
+            if (card.IsInHand || card.IsInDeck)
             {
-                var param = obj.BaseParameter;
-                Sender.Send($"EnemyPlay:{convertCardId(param)},{param.CardName},{param.Cost}");
+                Sender.Send($"EnemyPlay:{getCardInfo(card)}");
             }
 #if DEBUG
             else
             {
-                Sender.Send($"EnemySpellPlay:{obj.BaseParameter.CardName}");
+                Sender.Send($"EnemySpellPlay:{card.BaseParameter.CardName}");
             }
 #endif
         }
@@ -90,11 +87,9 @@ namespace ShadowWatcher.Battle
                 var cardList = new List<string>();
                 foreach (var c in _player.DeckCardList)
                 {
-                    var p = c.BaseParameter;
-                    cardList.Add($"{convertCardId(p)},{p.CardName},{p.Cost}{(p.CharType == CharaType.NORMAL ? $",{p.Atk},{p.Life}" : "")}");
+                    cardList.Add($"{getCardInfo(c)}");
                 }
-                var param = card.BaseParameter;
-                cardList.Add($"{convertCardId(param)},{param.CardName},{param.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
+                cardList.Add($"{getCardInfo(card)}");
                 Sender.Send($"PlayerDeck:{cardList.Aggregate((sum, s) => $"{sum};{s}")}");
 
                 _hasPlayerDrawn = true;
@@ -103,16 +98,13 @@ namespace ShadowWatcher.Battle
             {
                 foreach (var c in _player.HandCardList)
                 {
-                    var p = c.BaseParameter;
-                    Sender.Send($"PlayerDraw:{convertCardId(p)},{p.CardName},{p.Cost}{(p.CharType == CharaType.NORMAL ? $",{p.Atk},{p.Life}" : "")}");
+                    Sender.Send($"PlayerDraw:{getCardInfo(c)}");
                 }
-                var param = card.BaseParameter;
-                Sender.Send($"PlayerDraw:{convertCardId(param)},{param.CardName},{param.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
+                Sender.Send($"PlayerDraw:{getCardInfo(card)}");
             }
             else if (fromState == NetworkCardPlaceState.Stock && _player.Turn > 1)
             {
-                var param = card.BaseParameter;
-                Sender.Send($"PlayerDraw:{convertCardId(param)},{param.CardName},{param.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
+                Sender.Send($"PlayerDraw:{getCardInfo(card)}");
             }
 #if DEBUG
             else
@@ -126,8 +118,7 @@ namespace ShadowWatcher.Battle
         {
             if (card.IsInDeck)
             {
-                var param = card.BaseParameter;
-                Sender.Send($"PlayerDraw:{convertCardId(param)},{param.CardName},{param.Cost}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}");
+                Sender.Send($"PlayerDraw:{getCardInfo(card)}");
             }
 #if DEBUG
             else
@@ -138,6 +129,12 @@ namespace ShadowWatcher.Battle
         }
 
         #endregion
+
+        private string getCardInfo(BattleCardBase card, bool realCost = false)
+        {
+            var param = card.BaseParameter;
+            return $"{convertCardId(param)},{param.CardName},{(realCost ? card.Cost : param.Cost)}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}";
+        }
 
         private int convertCardId(CardParameter card)
         {
