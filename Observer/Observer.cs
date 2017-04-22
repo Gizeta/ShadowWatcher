@@ -1,5 +1,6 @@
 ﻿using ShadowWatcher.Battle;
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace ShadowWatcher
@@ -11,6 +12,12 @@ namespace ShadowWatcher
         public void Awake()
         {
             Sender.Initialize();
+            StartCoroutine(sendLoad());
+        }
+
+        private IEnumerator sendLoad()
+        {
+            yield return new WaitForSeconds(1);
             Sender.Send("Load.");
         }
 
