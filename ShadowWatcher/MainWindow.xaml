@@ -96,13 +96,33 @@
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                 </TabItem>
+                <TabItem Header="Replay">
+                    <Grid x:Name="ReplayGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="battle id:" />
+                            <TextBlock Text="{Binding BattleId}" />
+                            <TextBlock Text="viewer id:" Margin="10 0 0 0" />
+                            <TextBlock Text="{Binding ViewerId}" />
+                        </StackPanel>
+                        <TextBox Grid.Row="1" Text="{Binding Data}" />
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Click="RepSaveButton_Click" Margin="10">保存到文件...</Button>
+                            <Button Click="RepLoadButton_Click" Margin="10">从文件载入...</Button>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
                 <TabItem Header="Log">
                     <TextBox x:Name="LogText"/>
                 </TabItem>
             </TabControl>
         </Grid>
         
-        <Button Content="Attach/Detach" Grid.Row="1" Width="100" Height="30" Margin="10" Click="button_Click"/>
+        <Button Content="Attach/Detach" Grid.Row="1" Width="100" Height="30" Margin="10" Click="AttachButton_Click"/>
         
     </Grid>
 </Window>

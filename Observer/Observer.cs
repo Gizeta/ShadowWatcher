@@ -1,4 +1,5 @@
 ﻿using ShadowWatcher.Battle;
+using ShadowWatcher.Replay;
 using ShadowWatcher.Socket;
 using System;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace ShadowWatcher
     public class Observer : MonoBehaviour
     {
         private BattleManager battleManager = new BattleManager();
+        private ReplayManager replayManager = new ReplayManager();
 
         public void Awake()
         {
@@ -31,10 +33,11 @@ namespace ShadowWatcher
             try
             {
                 battleManager.Loop();
+                replayManager.Loop();
             }
             catch (Exception e)
             {
-                Sender.Send($"Error:{e.Message}");
+                Sender.Send($"Error:{e.Message}\n{e.StackTrace}");
             }
         }
 
