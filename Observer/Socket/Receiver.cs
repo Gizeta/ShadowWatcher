@@ -4,16 +4,21 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-namespace ShadowWatcher
+namespace ShadowWatcher.Socket
 {
     public static class Receiver
     {
         public static Action<string, string> OnReceived;
 
         private static Thread receiveThread;
+        private static UdpClient client;
 
-        static Receiver()
+        public static int ListenPort => ((IPEndPoint)client.Client.LocalEndPoint).Port;
+
+        public static void Initialize(int port = 37954)
         {
+            client = new UdpClient(port);
+
             receiveThread = new Thread(new ThreadStart(receiveData));
             receiveThread.IsBackground = true;
             receiveThread.Start();
@@ -21,7 +26,6 @@ namespace ShadowWatcher
 
         private static void receiveData()
         {
-            var client = new UdpClient(37954);
             while (true)
             {
                 var anyIP = new IPEndPoint(IPAddress.Loopback, 0);
@@ -39,6 +43,12 @@ namespace ShadowWatcher
                     OnReceived?.Invoke(str[0], str[1]);
                 }
             }
+        }
+
+        public static void Destroy()
+        {
+            receiveThread.Abort();
+            client.Close();
         }
     }
 }

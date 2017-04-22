@@ -1,6 +1,6 @@
 ﻿using ShadowWatcher.Battle;
+using ShadowWatcher.Socket;
 using System;
-using System.Collections;
 using UnityEngine;
 
 namespace ShadowWatcher
@@ -12,19 +12,18 @@ namespace ShadowWatcher
         public void Awake()
         {
             Sender.Initialize();
-            StartCoroutine(sendLoad());
-        }
+            Receiver.Initialize(0);
 
-        private IEnumerator sendLoad()
-        {
-            yield return new WaitForSeconds(1);
-            Sender.Send("Load.");
+            Receiver.OnReceived = Receiver_OnReceived;
+
+            Sender.Send($"Load:{Receiver.ListenPort}");
         }
 
         public void OnDestroy()
         {
             Sender.Send("Unload.");
             Sender.Destroy();
+            Receiver.Destroy();
         }
 
         public void LateUpdate()
@@ -33,10 +32,14 @@ namespace ShadowWatcher
             {
                 battleManager.Loop();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Sender.Send($"Error:{e.Message}");
             }
+        }
+
+        private void Receiver_OnReceived(string action, string data)
+        {
         }
     }
 }

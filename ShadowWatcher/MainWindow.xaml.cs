@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
+using ShadowWatcher.Socket;
 
 namespace ShadowWatcher
 {
@@ -16,11 +17,15 @@ namespace ShadowWatcher
         {
             InitializeComponent();
 
+            Receiver.Initialize();
+
             DataContext = this;
         }
 
         private void attachObserver()
         {
+            Receiver.OnReceived = Receiver_OnReceived;
+
             var process = Process.Start("injector\\mono-assembly-injector.exe", "-dll Observer.dll -target Shadowverse.exe -namespace ShadowWatcher -class Loader -method Load");
             if (process != null && process.WaitForExit(10000))
             {
@@ -32,7 +37,6 @@ namespace ShadowWatcher
                 }
             }
 
-            Receiver.OnReceived = Receiver_OnReceived;
             isAttached = true;
         }
 
@@ -64,9 +68,7 @@ namespace ShadowWatcher
                     });
                     break;
                 case "Load":
-                case "Unload":
-                case "Win":
-                case "Lose":
+                    Sender.Initialize(int.Parse(data));
                     break;
                 case "EnemyPlay":
                 case "EnemyAdd":

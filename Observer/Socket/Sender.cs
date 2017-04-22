@@ -2,16 +2,17 @@
 using System.Net.Sockets;
 using System.Text;
 
-namespace ShadowWatcher
+namespace ShadowWatcher.Socket
 {
     public static class Sender
     {
-        private readonly static IPEndPoint dstIP = new IPEndPoint(IPAddress.Loopback, 37954);
+        private static IPEndPoint dstIP;
         private static UdpClient client;
 
-        public static void Initialize()
+        public static void Initialize(int port = 37954)
         {
             client = new UdpClient();
+            dstIP = new IPEndPoint(IPAddress.Loopback, port);
         }
 
         public static void Send(string str)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ShadowWatcher.Socket;
+using System.Collections.Generic;
 using System.Linq;
 using CardParameter = Wizard.CardMaster.CardParameter;
 using CharaType = CardBasePrm.CharaType;
