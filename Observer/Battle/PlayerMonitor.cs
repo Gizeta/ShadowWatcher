@@ -1,8 +1,7 @@
-﻿using ShadowWatcher.Socket;
+﻿using ShadowWatcher.Contract;
+using ShadowWatcher.Socket;
 using System.Collections.Generic;
 using System.Linq;
-using CardParameter = Wizard.CardMaster.CardParameter;
-using CharaType = CardBasePrm.CharaType;
 using NetworkCardPlaceState = RealTimeNetworkBattleAgent.NetworkCardPlaceState;
 
 namespace ShadowWatcher.Battle
@@ -11,6 +10,7 @@ namespace ShadowWatcher.Battle
     {
         private static BattleEnemy _enemy;
         private static BattlePlayer _player;
+        private static bool _hasMulligan = false;
         private static bool _hasPlayerDrawn = false;
         
         public void CheckReference(BattlePlayer player, BattleEnemy enemy)
@@ -18,6 +18,7 @@ namespace ShadowWatcher.Battle
             if (player != null && _player != player)
             {
                 _player = player;
+                _hasMulligan = false;
                 _hasPlayerDrawn = false;
 
                 _player.OnAddHandCardEvent += Player_OnAddHandCardEvent;
@@ -39,7 +40,7 @@ namespace ShadowWatcher.Battle
         {
             if (fromState == NetworkCardPlaceState.None || fromState == NetworkCardPlaceState.Field)
             {
-                Sender.Send($"EnemyAdd:{getCardInfo(card, true)}");
+                Sender.Send($"EnemyAdd:{CardData.Parse(card, true)}");
             }
 #if DEBUG
             else
@@ -53,7 +54,7 @@ namespace ShadowWatcher.Battle
         {
             if (card.IsInHand || card.IsInDeck)
             {
-                Sender.Send($"EnemyPlay:{getCardInfo(card)}");
+                Sender.Send($"EnemyPlay:{CardData.Parse(card)}");
             }
 #if DEBUG
             else
@@ -67,7 +68,7 @@ namespace ShadowWatcher.Battle
         {
             if (card.IsInHand || card.IsInDeck)
             {
-                Sender.Send($"EnemyPlay:{getCardInfo(card)}");
+                Sender.Send($"EnemyPlay:{CardData.Parse(card)}");
             }
 #if DEBUG
             else
@@ -83,29 +84,40 @@ namespace ShadowWatcher.Battle
 
         private void Player_OnAddHandCardEvent(BattleCardBase card, NetworkCardPlaceState fromState)
         {
-            if (!_hasPlayerDrawn && _player.Turn == 0)
+            if (!_hasMulligan)
             {
+                _hasMulligan = true;
+
                 var cardList = new List<string>();
                 foreach (var c in _player.DeckCardList)
                 {
-                    cardList.Add($"{getCardInfo(c)}");
+                    cardList.Add($"{CardData.Parse(c)}");
                 }
-                cardList.Add($"{getCardInfo(card)}");
-                Sender.Send($"PlayerDeck:{cardList.Aggregate((sum, s) => $"{sum};{s}")}");
+                cardList.Add($"{CardData.Parse(card)}");
 
-                _hasPlayerDrawn = true;
-            }
-            else if (fromState == NetworkCardPlaceState.Stock && _player.Turn == 1)
-            {
-                foreach (var c in _player.HandCardList)
+                if (_player.Turn == 0)
                 {
-                    Sender.Send($"PlayerDraw:{getCardInfo(c)}");
+                    foreach (var c in _player.HandCardList)
+                    {
+                        cardList.Add($"{CardData.Parse(c)}");
+                    }
                 }
-                Sender.Send($"PlayerDraw:{getCardInfo(card)}");
+
+                Sender.Send($"PlayerDeck:{cardList.Aggregate((sum, s) => $"{sum};{s}")}");
             }
-            else if (fromState == NetworkCardPlaceState.Stock && _player.Turn > 1)
+            else if (fromState == NetworkCardPlaceState.Stock && _player.Turn > 0)
             {
-                Sender.Send($"PlayerDraw:{getCardInfo(card)}");
+                if (!_hasPlayerDrawn && _player.Turn == 1)
+                {
+                    _hasPlayerDrawn = true;
+
+                    foreach (var c in _player.HandCardList)
+                    {
+                        Sender.Send($"PlayerDraw:{CardData.Parse(c)}");
+                    }
+                }
+
+                Sender.Send($"PlayerDraw:{CardData.Parse(card)}");
             }
 #if DEBUG
             else
@@ -119,7 +131,7 @@ namespace ShadowWatcher.Battle
         {
             if (card.IsInDeck)
             {
-                Sender.Send($"PlayerDraw:{getCardInfo(card)}");
+                Sender.Send($"PlayerDraw:{CardData.Parse(card)}");
             }
 #if DEBUG
             else
@@ -130,17 +142,5 @@ namespace ShadowWatcher.Battle
         }
 
         #endregion
-
-        private string getCardInfo(BattleCardBase card, bool realCost = false)
-        {
-            var param = card.BaseParameter;
-            return $"{convertCardId(param)},{param.CardName},{(realCost ? card.Cost : param.Cost)}{(param.CharType == CharaType.NORMAL ? $",{param.Atk},{param.Life}" : "")}";
-        }
-
-        private int convertCardId(CardParameter card)
-        {
-            var d = card.CardId.ToString();
-            return int.Parse($"{d[3]}{d[5]}{d[2]}{d[6]}{d[7]}");
-        }
     }
 }

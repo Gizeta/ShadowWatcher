@@ -78,43 +78,17 @@ namespace ShadowWatcher
                     break;
                 case "EnemyPlay":
                 case "EnemyAdd":
-                    var info = data.Split(',');
-                    var cardInfo = new CardInfo
-                    {
-                        ID = int.Parse(info[0]),
-                        Name = info[1],
-                        Cost = int.Parse(info[2]),
-                        Amount = action == "EnemyPlay" ? 1 : -1,
-                    };
-                    if (info.Length > 3)
-                    {
-                        cardInfo.Atk = int.Parse(info[3]);
-                        cardInfo.Life = int.Parse(info[4]);
-                    }
-
                     Dispatcher.Invoke(() =>
                     {
-                        EnemyDeckList.Add(cardInfo);
+                        EnemyDeckList.Add(CardData.Parse(data, action == "EnemyPlay" ? 1 : -1));
                     });
                     break;
                 case "PlayerDeck":
-                    var cardList = new List<CardInfo>();
+                    var cardList = new List<CardData>();
                     var cards = data.Split(';');
                     foreach (var card in cards)
                     {
-                        info = card.Split(',');
-                        cardInfo = new CardInfo
-                        {
-                            ID = int.Parse(info[0]),
-                            Name = info[1],
-                            Cost = int.Parse(info[2]),
-                        };
-                        if (info.Length > 3)
-                        {
-                            cardInfo.Atk = int.Parse(info[3]);
-                            cardInfo.Life = int.Parse(info[4]);
-                        }
-                        cardList.Add(cardInfo);
+                        cardList.Add(CardData.Parse(card));
                     }                    
 
                     Dispatcher.Invoke(() =>
@@ -124,23 +98,9 @@ namespace ShadowWatcher
                     });
                     break;
                 case "PlayerDraw":
-                    info = data.Split(',');
-                    cardInfo = new CardInfo
-                    {
-                        ID = int.Parse(info[0]),
-                        Name = info[1],
-                        Cost = int.Parse(info[2]),
-                        Amount = -1,
-                    };
-                    if (info.Length > 3)
-                    {
-                        cardInfo.Atk = int.Parse(info[3]);
-                        cardInfo.Life = int.Parse(info[4]);
-                    }
-
                     Dispatcher.Invoke(() =>
                     {
-                        PlayerDeckList.Add(cardInfo);
+                        PlayerDeckList.Add(CardData.Parse(data, -1));
                     });
                     break;
                 case "ReplayDetail":

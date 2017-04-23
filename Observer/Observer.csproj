@@ -48,6 +48,7 @@
     <Compile Include="Battle\BattleManager.cs" />
     <Compile Include="Battle\PlayerMonitor.cs" />
     <Compile Include="Battle\ReceiverMonitor.cs" />
+    <Compile Include="Contract\CardData.cs" />
     <Compile Include="Contract\ConstData.cs" />
     <Compile Include="Contract\ReplayData.cs" />
     <Compile Include="Loader.cs" />
