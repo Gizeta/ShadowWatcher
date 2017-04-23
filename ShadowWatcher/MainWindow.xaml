@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <Grid>
-            <TabControl>
+            <TabControl x:Name="MainTab">
                 <TabItem Header="Enemy">
                     <ItemsControl ItemsSource="{Binding EnemyDeckList}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
                         <ItemsControl.ItemTemplate>

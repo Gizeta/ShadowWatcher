@@ -21,6 +21,7 @@ namespace ShadowWatcher
             InitializeComponent();
 
             Receiver.Initialize();
+            MainTab.IsEnabled = false;
 
             DataContext = this;
         }
@@ -41,6 +42,7 @@ namespace ShadowWatcher
             }
 
             isAttached = true;
+            MainTab.IsEnabled = true;
         }
 
         private void detachObserver()
@@ -58,6 +60,7 @@ namespace ShadowWatcher
 
             Receiver.OnReceived = null;
             isAttached = false;
+            MainTab.IsEnabled = false;
         }
 
         private void Receiver_OnReceived(string action, string data)
