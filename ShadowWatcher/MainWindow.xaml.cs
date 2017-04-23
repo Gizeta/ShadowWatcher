@@ -1,10 +1,10 @@
 ﻿using Microsoft.Win32;
+using ShadowWatcher.Contract;
 using ShadowWatcher.Socket;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace ShadowWatcher
@@ -15,21 +15,6 @@ namespace ShadowWatcher
 
         public CardList EnemyDeckList { get; set; } = new CardList();
         public CardList PlayerDeckList { get; set; } = new CardList();
-
-        public class BattleData
-        {
-            public string BattleId { get; set; }
-            public string ViewerId { get; set; }
-            public string Data { get; set; }
-
-            public BattleData(string json)
-            {
-                Data = json;
-
-                BattleId = new Regex(@"battle_id\D+(\d+)").Match(json).Groups[1].Value;
-                ViewerId = new Regex(@"viewer_id\D+(\d+)").Match(json).Groups[1].Value;
-            }
-        }
 
         public MainWindow()
         {
@@ -158,7 +143,7 @@ namespace ShadowWatcher
                 case "ReplayDetail":
                     Dispatcher.Invoke(() =>
                     {
-                        ReplayGrid.DataContext = new BattleData(data);
+                        ReplayGrid.DataContext = ReplayData.Parse(data);
                     });
                     break;
             }
@@ -190,7 +175,7 @@ namespace ShadowWatcher
             if (dialog.ShowDialog() == true)
             {
                 var stream = new StreamWriter(dialog.FileName);
-                stream.Write((ReplayGrid.DataContext as BattleData).Data);
+                stream.Write((ReplayGrid.DataContext as ReplayData).ToString());
                 stream.Close();
             }
         }
@@ -206,7 +191,7 @@ namespace ShadowWatcher
                 var json = stream.ReadToEnd();
                 stream.Close();
 
-                ReplayGrid.DataContext = new BattleData(json);
+                ReplayGrid.DataContext = ReplayData.Parse(json);
 
                 Sender.Send($"ReplayRequest:{json}");
             }

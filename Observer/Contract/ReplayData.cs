@@ -1,4 +1,5 @@
 ﻿using LitJson;
+using System;
 using System.Collections.Generic;
 
 namespace ShadowWatcher.Contract
@@ -13,6 +14,20 @@ namespace ShadowWatcher.Contract
         {
             Data = JsonMapper.ToObject(data)
         };
+
+        public string Name => Data["name"].ToString();
+        public string CountryCode => Data["country_code"].ToString();
+        public string Rank => ConstData.Rank[Data["rank"].ToInt()];
+        public string Class => ConstData.Class[Data["chara_id"].ToInt()];
+
+        public string OppoName => Data["opponent_name"].ToString();
+        public string OppoCountryCode => Data["opponent_country_code"].ToString();
+        public string OppoRank => ConstData.Rank[Data["opponent_rank"].ToInt()];
+        public string OppoClass => ConstData.Class[Data["opponent_chara_id"].ToInt()];
+
+        public string Result => Data["is_win"].ToBoolean() ? "Win" : "Lose";
+        public string Type => Data["is_two_pick"].ToBoolean() ? "竞技场" : "天梯";
+        public DateTime Time => new DateTime(1970, 1, 1, 0, 0, 0).AddMilliseconds(Data["play_list"]["playlist"][0]["time"].ToLong()).ToLocalTime();
 
         public static ReplayData Parse(ReplayDetail detail)
         {

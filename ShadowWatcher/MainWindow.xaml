@@ -100,17 +100,34 @@
                     <Grid x:Name="ReplayGrid">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="battle id:" />
-                            <TextBlock Text="{Binding BattleId}" />
-                            <TextBlock Text="viewer id:" Margin="10 0 0 0" />
-                            <TextBlock Text="{Binding ViewerId}" />
-                        </StackPanel>
-                        <TextBox Grid.Row="1" Text="{Binding Data}" />
-                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{Binding Time}" HorizontalAlignment="Left" />
+                        <TextBlock Grid.Column="2" Text="{Binding Type}" HorizontalAlignment="Right" />
+                        <TextBlock Grid.Row="1" Text="{Binding Name}" HorizontalAlignment="Center" FontSize="18" />
+                        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding OppoName}" HorizontalAlignment="Center" FontSize="18" />
+                        <TextBlock Grid.Row="2" Text="{Binding CountryCode}" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding OppoCountryCode}" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="3" Text="{Binding Class}" HorizontalAlignment="Center" FontSize="14" />
+                        <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding OppoClass}" HorizontalAlignment="Center" FontSize="14" />
+                        <TextBlock Grid.Row="4" Text="{Binding Rank}" HorizontalAlignment="Center" FontSize="14" />
+                        <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding OppoRank}" HorizontalAlignment="Center" FontSize="14" />
+
+                        <TextBlock Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Text="V.S." VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Result}" HorizontalAlignment="Center" />
+                        
+                        <StackPanel Grid.Row="6" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button Click="RepSaveButton_Click" Margin="10">保存到文件...</Button>
                             <Button Click="RepLoadButton_Click" Margin="10">从文件载入...</Button>
                         </StackPanel>
