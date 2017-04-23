@@ -197,7 +197,19 @@ namespace ShadowWatcher
 
         private void RepLoadButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("未实现");
+            var dialog = new OpenFileDialog();
+            dialog.DefaultExt = ".json";
+            dialog.Filter = "对战数据 (.json)|*.json";
+            if (dialog.ShowDialog() == true)
+            {
+                var stream = new StreamReader(dialog.FileName);
+                var json = stream.ReadToEnd();
+                stream.Close();
+
+                ReplayGrid.DataContext = new BattleData(json);
+
+                Sender.Send($"ReplayRequest:{json}");
+            }
         }
     }
 }

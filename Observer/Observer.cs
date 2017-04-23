@@ -43,6 +43,12 @@ namespace ShadowWatcher
 
         private void Receiver_OnReceived(string action, string data)
         {
+            switch (action)
+            {
+                case "ReplayRequest":
+                    replayManager.InjectReplay(data);
+                    break;
+            }
         }
     }
 }
