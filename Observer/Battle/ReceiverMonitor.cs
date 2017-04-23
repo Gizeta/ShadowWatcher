@@ -10,9 +10,12 @@ namespace ShadowWatcher.Battle
 {
     public class ReceiverMonitor
     {
+        private RealTimeNetworkBattleAgent _agent;
+
         public ReceiverMonitor(RealTimeNetworkBattleAgent agent)
         {
             agent.OnReceivedEvent += receivedHandler;
+            _agent = agent;
         }
 
         private void receivedHandler(Dictionary<string, object> dict)
@@ -65,6 +68,12 @@ namespace ShadowWatcher.Battle
                     break;
 #endif
             }
+        }
+
+        ~ReceiverMonitor()
+        {
+            if (_agent != null)
+                _agent.OnReceivedEvent -= receivedHandler;
         }
     }
 }

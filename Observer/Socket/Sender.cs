@@ -18,12 +18,14 @@ namespace ShadowWatcher.Socket
         public static void Send(string str)
         {
             var buf = Encoding.UTF8.GetBytes(str);
-            client.Send(buf, buf.Length, dstIP);
+            if (client != null)
+                client.Send(buf, buf.Length, dstIP);
         }
 
         public static void Destroy()
         {
             client.Close();
+            client = null;
         }
     }
 }

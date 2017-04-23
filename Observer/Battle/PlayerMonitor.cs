@@ -34,6 +34,21 @@ namespace ShadowWatcher.Battle
             }
         }
 
+        ~PlayerMonitor()
+        {
+            if (_player != null)
+            {
+                _player.OnAddHandCardEvent -= Player_OnAddHandCardEvent;
+                _player.OnAddPlayCardEvent -= Player_OnAddPlayCardEvent;
+            }
+            if (_enemy != null)
+            {
+                _enemy.OnAddHandCardEvent -= Enemy_OnAddHandCardEvent;
+                _enemy.OnAddPlayCardEvent -= Enemy_OnAddPlayCardEvent;
+                _enemy.OnSpellPlayEvent -= Enemy_OnSpellPlayEvent;
+            }
+        }
+
         #region BattleEnemy Events
 
         private void Enemy_OnAddHandCardEvent(BattleCardBase card, NetworkCardPlaceState fromState)
