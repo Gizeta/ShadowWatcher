@@ -51,7 +51,7 @@ namespace ShadowWatcher.Contract
         {
             var param = card.BaseParameter;
             var d = param.CardId.ToString();
-            var id = int.Parse($"{d[3]}{d[5]}{d[2]}{d[6]}{d[7]}");
+            var id = int.Parse($"{d[3]}{d[5]}{d[2]}{d[6]}{d[7]}{d[0]}");
             var data = new CardData
             {
                 ID = id,
