@@ -24,9 +24,6 @@ namespace ShadowWatcher.Battle
 
             switch (uri)
             {
-                case NetworkDataURI.Ready:
-                    Sender.Send("BattleReady.");
-                    break;
                 case NetworkDataURI.SpecialWin:
                 case NetworkDataURI.Retire:
                     if (dict["isWin"].ToString() == "1")

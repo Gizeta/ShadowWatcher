@@ -1,4 +1,5 @@
-﻿using Wizard;
+﻿using ShadowWatcher.Socket;
+using Wizard;
 
 namespace ShadowWatcher.Battle
 {
@@ -22,6 +23,8 @@ namespace ShadowWatcher.Battle
                     {
                         gameMgr.IsAdmin = true;
                     }
+
+                    Sender.Send("BattleReady.");
                 }
 
                 var battleMgr = agent.GetBattleManager();
