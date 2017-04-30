@@ -26,7 +26,7 @@ namespace ShadowWatcher.Contract
         public string OppoClass => ConstData.Class[Data["opponent_chara_id"].ToInt()];
 
         public string Result => Data["is_win"].ToBoolean() ? "Win" : "Lose";
-        public string Type => Data["is_two_pick"].ToBoolean() ? "竞技场" : "天梯";
+        public string Type => Data["is_two_pick"].ToBoolean() ? "2 pick" : "构筑";
         public DateTime Time => new DateTime(1970, 1, 1, 0, 0, 0).AddMilliseconds(Data["play_list"]["playlist"][0]["time"].ToLong()).ToLocalTime();
 
         public static ReplayData Parse(ReplayDetail detail)
