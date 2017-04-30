@@ -18,7 +18,7 @@ namespace ShadowWatcher.Contract
         public string Name => Data["name"].ToString();
         public string CountryCode => Data["country_code"].ToString();
         public string Rank => ConstData.Rank[Data["rank"].ToInt()];
-        public string Class => ConstData.Class[Data["chara_id"].ToInt()];
+        public string Class => ConstData.Class[Data["chara_id"].ToInt() % 10];
 
         public string OppoName => Data["opponent_name"].ToString();
         public string OppoCountryCode => Data["opponent_country_code"].ToString();
