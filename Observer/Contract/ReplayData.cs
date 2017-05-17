@@ -10,6 +10,36 @@ namespace ShadowWatcher.Contract
 
         public JsonData Data { get; private set; }
 
+        public static JsonData FakeData = JsonMapper.ToObject(@"{
+            ""battleId"": 0,
+            ""seed"": 0,
+            ""fieldId"": 0,
+            ""firstTurn"": 0,
+            ""playlist"": [],
+            ""vid1"": 0,
+            ""name1"": """",
+            ""charaId1"": 0,
+            ""emblemId1"": 0,
+            ""degreeId1"": 0,
+            ""countryCode1"": """",
+            ""sleeveId1"": 0,
+            ""battlePoint1"": 0,
+            ""masterPoint1"": 0,
+            ""rank1"": 0,
+            ""deck1"": [],
+            ""vid2"": 0,
+            ""name2"": """",
+            ""charaId2"": 0,
+            ""emblemId2"": 0,
+            ""degreeId2"": 0,
+            ""countryCode2"": """",
+            ""sleeveId2"": 0,
+            ""battlePoint2"": 0,
+            ""masterPoint2"": 0,
+            ""rank2"": 0,
+            ""deck2"": []
+        }");
+
         public static ReplayData Parse(string data) => new ReplayData
         {
             Data = JsonMapper.ToObject(data)
@@ -211,8 +241,13 @@ namespace ShadowWatcher.Contract
 
         public override string ToString() => Data.ToJson();
 
-        public ReplayDetail AssignTo(ReplayDetail detail)
+        public ReplayDetail Assign()
         {
+            if (Wizard.Data.ReplayBattleInfo == null)
+                Wizard.Data.ReplayBattleInfo = new ReplayDetail(FakeData);
+
+            var detail = Wizard.Data.ReplayBattleInfo;
+
             detail.battle_id = Data["battle_id"].ToLong();
             detail.seed = Data["seed"].ToInt();
             detail.field_id = Data["field_id"].ToInt();
@@ -303,6 +338,9 @@ namespace ShadowWatcher.Contract
                 deck2.Add(item);
             }
             detail.opponent_deck = deck2;
+
+            detail.is_two_pick = Data["is_two_pick"].ToBoolean();
+            detail.is_win = Data["is_win"].ToBoolean();
 
             return detail;
         }

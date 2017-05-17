@@ -25,7 +25,7 @@ namespace ShadowWatcher.Replay
 
         public void InjectReplay(string json)
         {
-            ReplayData.Parse(json).AssignTo(Data.ReplayBattleInfo);
+            ReplayData.Parse(json).Assign();
             gameMgr._ReplayControl = new ReplayController();
         }
     }
