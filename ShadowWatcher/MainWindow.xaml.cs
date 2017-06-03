@@ -3,7 +3,6 @@ using ShadowWatcher.Contract;
 using ShadowWatcher.Socket;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Windows;
 
@@ -30,15 +29,11 @@ namespace ShadowWatcher
         {
             Receiver.OnReceived = Receiver_OnReceived;
 
-            var process = Process.Start("injector\\mono-assembly-injector.exe", "-dll Observer.dll -target Shadowverse.exe -namespace ShadowWatcher -class Loader -method Load");
-            if (process != null && process.WaitForExit(10000))
+            var result = Injector.Attach();
+            if (result != 0)
             {
-                var exitCode = process.ExitCode;
-                if (exitCode != 0)
-                {
-                    MessageBox.Show("Failed to load.");
-                    return;
-                }
+                MessageBox.Show($"Error: {result}");
+                return;
             }
 
             isAttached = true;
@@ -47,15 +42,11 @@ namespace ShadowWatcher
 
         private void detachObserver()
         {
-            var process = Process.Start("injector\\mono-assembly-injector.exe", "-dll Observer.dll -target Shadowverse.exe -namespace ShadowWatcher -class Loader -method Unload");
-            if (process != null && process.WaitForExit(10000))
+            var result = Injector.Detach();
+            if (result != 0)
             {
-                var exitCode = process.ExitCode;
-                if (exitCode != 0)
-                {
-                    MessageBox.Show("Failed to unload.");
-                    return;
-                }
+                MessageBox.Show($"Error: {result}");
+                return;
             }
 
             Receiver.OnReceived = null;
