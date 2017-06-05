@@ -1,4 +1,5 @@
 ﻿using ShadowWatcher.Battle;
+using ShadowWatcher.Deck;
 using ShadowWatcher.Replay;
 using ShadowWatcher.Socket;
 using System;
@@ -34,6 +35,7 @@ namespace ShadowWatcher
             {
                 battleManager.Loop();
                 replayManager.Loop();
+                CardAllListEnhancer.SetUp();
             }
             catch (Exception e)
             {
