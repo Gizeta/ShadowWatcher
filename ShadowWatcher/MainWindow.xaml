@@ -133,6 +133,11 @@
                         </StackPanel>
                     </Grid>
                 </TabItem>
+                <TabItem Header="Feature">
+                    <StackPanel x:Name="SettingPanel" Margin="10">
+                        <CheckBox Content="显示召唤卡" IsChecked="{Binding ShowSummonCard}" />
+                    </StackPanel>
+                </TabItem>
                 <TabItem Header="Log">
                     <TextBox x:Name="LogText"/>
                 </TabItem>

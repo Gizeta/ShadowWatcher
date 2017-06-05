@@ -35,7 +35,9 @@ namespace ShadowWatcher
             {
                 battleManager.Loop();
                 replayManager.Loop();
-                CardAllListEnhancer.SetUp();
+
+                if (Settings.ShowSummonCard)
+                    CardAllListEnhancer.SetUp();
             }
             catch (Exception e)
             {
@@ -49,6 +51,9 @@ namespace ShadowWatcher
             {
                 case "ReplayRequest":
                     replayManager.InjectReplay(data);
+                    break;
+                case "Setting":
+                    Settings.Parse(data);
                     break;
             }
         }

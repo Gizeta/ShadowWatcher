@@ -23,6 +23,7 @@ namespace ShadowWatcher
             MainTab.IsEnabled = false;
 
             DataContext = this;
+            SettingPanel.DataContext = new SettingModel();
         }
 
         private void attachObserver()
@@ -66,6 +67,7 @@ namespace ShadowWatcher
                     break;
                 case "Load":
                     Sender.Initialize(int.Parse(data));
+                    Sender.Send($"Setting:{Settings.ToString()}");
                     break;
                 case "EnemyPlay":
                 case "EnemyAdd":
