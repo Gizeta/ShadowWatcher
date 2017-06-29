@@ -41,10 +41,10 @@ namespace ShadowWatcher
             MainTab.IsEnabled = true;
         }
 
-        private void detachObserver()
+        private void detachObserver(bool closing = false)
         {
             var result = Injector.Detach();
-            if (result != 0)
+            if (result != 0 && !closing)
             {
                 MessageBox.Show($"Error: {result}");
                 return;
@@ -120,7 +120,7 @@ namespace ShadowWatcher
         private void Window_Closed(object sender, EventArgs e)
         {
             if (isAttached)
-                detachObserver();
+                detachObserver(true);
         }
 
         private void RepSaveButton_Click(object sender, RoutedEventArgs e)
