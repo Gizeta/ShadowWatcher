@@ -51,7 +51,7 @@ namespace ShadowWatcher.Battle
 
         #region BattleEnemy Events
 
-        private void Enemy_OnAddHandCardEvent(BattleCardBase card, NetworkCardPlaceState fromState)
+        private void Enemy_OnAddHandCardEvent(BattleCardBase card, NetworkCardPlaceState fromState, bool isOpen)
         {
             if (fromState == NetworkCardPlaceState.None || fromState == NetworkCardPlaceState.Field)
             {
@@ -97,7 +97,7 @@ namespace ShadowWatcher.Battle
 
         #region BattlePlayer Events
 
-        private void Player_OnAddHandCardEvent(BattleCardBase card, NetworkCardPlaceState fromState)
+        private void Player_OnAddHandCardEvent(BattleCardBase card, NetworkCardPlaceState fromState, bool isOpen)
         {
             if (!_hasMulligan)
             {

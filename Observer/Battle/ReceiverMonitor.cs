@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Wizard;
-using BattleFinishStatus = TaskManager.BattleFinishStatus;
+using RESULT_CODE = NetworkBattleReceiver.RESULT_CODE;
 using NetworkDataURI = RealTimeNetworkBattleAgent.NetworkDataURI;
 
 namespace ShadowWatcher.Battle
@@ -32,17 +32,13 @@ namespace ShadowWatcher.Battle
                         Sender.Send("Lose.");
                     break;
                 case NetworkDataURI.BattleFinish:
-                    switch (ToolboxGame.RealTimeNetworkBattle.GetBattleManager().JudgeCurrentFinishStatus())
-                    {
-                        case BattleFinishStatus.Life_Win:
-                        case BattleFinishStatus.ShortageDeck_Win:
-                            Sender.Send("Win.");
-                            break;
-                        case BattleFinishStatus.Life_Lose:
-                        case BattleFinishStatus.ShortageDeck_Lose:
-                            Sender.Send("Lose.");
-                            break;
-                    }
+                    var code = (int)ToolboxGame.RealTimeNetworkBattle.GetBattleManager().JudgeCurrentFinishStatus();
+                    if (code < 0x60 || code > 0xff)
+                        break;
+                    if (code % 2 == 0)
+                        Sender.Send("Lose.");
+                    else
+                        Sender.Send("Win.");
                     break;
 #if DEBUG
                 case NetworkDataURI.PlayHand:
