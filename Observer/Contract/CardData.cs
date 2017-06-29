@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 using static CardBasePrm;
 
 namespace ShadowWatcher.Contract
@@ -55,7 +56,7 @@ namespace ShadowWatcher.Contract
             var data = new CardData
             {
                 ID = id,
-                Name = param.CardName,
+                Name = Regex.Replace(param.CardName, @"(\[[a-zA-Z0-9\/\-]*(rub\<[^\>]*\>)*\])", ""),
                 Cost = realCost ? card.Cost : param.Cost,
                 Amount = amount
             };
