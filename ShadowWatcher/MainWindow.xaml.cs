@@ -78,7 +78,7 @@ namespace ShadowWatcher
                     break;
                 case "PlayerDeck":
                     var cardList = new List<CardData>();
-                    var cards = data.Split(';');
+                    var cards = data.Split('\n');
                     foreach (var card in cards)
                     {
                         cardList.Add(CardData.Parse(card));

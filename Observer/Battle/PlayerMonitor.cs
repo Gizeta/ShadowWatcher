@@ -118,7 +118,7 @@ namespace ShadowWatcher.Battle
                     }
                 }
 
-                Sender.Send($"PlayerDeck:{cardList.Aggregate((sum, s) => $"{sum};{s}")}");
+                Sender.Send($"PlayerDeck:{cardList.Aggregate((sum, s) => $"{sum}\n{s}")}");
             }
             else if (fromState == NetworkCardPlaceState.Stock && _player.Turn > 0)
             {

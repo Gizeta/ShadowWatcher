@@ -32,7 +32,7 @@ namespace ShadowWatcher.Contract
 
         public static CardData Parse(string data, int amount = 1)
         {
-            var info = data.Split(',');
+            var info = data.Split('\t');
             var card = new CardData
             {
                 ID = int.Parse(info[0]),
@@ -68,7 +68,7 @@ namespace ShadowWatcher.Contract
             return data;
         }
 
-        public override string ToString() => $"{ID},{Name},{Cost}{(Atk.HasValue ? $",{Atk.Value},{Life.Value}" : "")}";
+        public override string ToString() => $"{ID}\t{Name}\t{Cost}{(Atk.HasValue ? $"\t{Atk.Value}\t{Life.Value}" : "")}";
 
         public event PropertyChangedEventHandler PropertyChanged;
 
