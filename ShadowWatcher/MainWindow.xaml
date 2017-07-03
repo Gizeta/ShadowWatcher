@@ -107,6 +107,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -132,6 +133,7 @@
                             <Button Click="RepSaveButton_Click" Margin="10">保存到文件...</Button>
                             <Button Click="RepLoadButton_Click" Margin="10">从文件载入...</Button>
                         </StackPanel>
+                        <TextBlock Grid.Row="7" Grid.ColumnSpan="3" HorizontalAlignment="Center">请在打开回放对话框后使用此功能。</TextBlock>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Feature">
