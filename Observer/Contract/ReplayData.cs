@@ -26,6 +26,7 @@ namespace ShadowWatcher.Contract
             ""battlePoint1"": 0,
             ""masterPoint1"": 0,
             ""rank1"": 0,
+            ""isOfficial1"": false,
             ""deck1"": [],
             ""vid2"": 0,
             ""name2"": """",
@@ -37,6 +38,7 @@ namespace ShadowWatcher.Contract
             ""battlePoint2"": 0,
             ""masterPoint2"": 0,
             ""rank2"": 0,
+            ""isOfficial2"": false,
             ""deck2"": []
         }");
 
@@ -178,6 +180,8 @@ namespace ShadowWatcher.Contract
             w.Write(detail.master_point);
             w.WritePropertyName("rank");
             w.Write(detail.rank);
+            w.WritePropertyName("is_offical_user");
+            w.Write(detail.IsOfficialUser);
 
             w.WritePropertyName("deck");
             w.WriteArrayStart();
@@ -212,6 +216,8 @@ namespace ShadowWatcher.Contract
             w.Write(detail.opponent_master_point);
             w.WritePropertyName("opponent_rank");
             w.Write(detail.opponent_rank);
+            w.WritePropertyName("is_opponent_offical_user");
+            w.Write(detail.IsOpponentOfficialUser);
 
             w.WritePropertyName("opponent_deck");
             w.WriteArrayStart();
@@ -338,6 +344,14 @@ namespace ShadowWatcher.Contract
                 deck2.Add(item);
             }
             detail.opponent_deck = deck2;
+
+            #region WLD changes
+            if (Data.Keys.Contains("is_offical_user") && Data.Keys.Contains("is_opponent_offical_user"))
+            {
+                detail.IsOfficialUser = Data["is_offical_user"].ToBoolean();
+                detail.IsOpponentOfficialUser = Data["is_opponent_offical_user"].ToBoolean();
+            }
+            #endregion
 
             detail.is_two_pick = Data["is_two_pick"].ToBoolean();
             detail.is_win = Data["is_win"].ToBoolean();

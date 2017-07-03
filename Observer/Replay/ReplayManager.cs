@@ -1,5 +1,6 @@
 ﻿using ShadowWatcher.Contract;
 using ShadowWatcher.Socket;
+using System;
 using Wizard;
 using Wizard.Replay;
 
@@ -25,8 +26,16 @@ namespace ShadowWatcher.Replay
 
         public void InjectReplay(string json)
         {
-            ReplayData.Parse(json).Assign();
-            gameMgr._ReplayControl = new ReplayController();
+            try
+            {
+                ReplayData.Parse(json).Assign();
+                gameMgr._ReplayControl = new ReplayController();
+                Sender.Send("OK.");
+            }
+            catch(Exception e)
+            {
+                Sender.Send($"Error:{e.Message}\n{e.StackTrace}");
+            }
         }
     }
 }
