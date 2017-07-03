@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BooleanToVisibilityConverter.cs" />
     <Compile Include="AmountToColorConverter.cs" />
     <Compile Include="CardList.cs" />
     <Compile Include="SettingModel.cs" />

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Wizard;
-using RESULT_CODE = NetworkBattleReceiver.RESULT_CODE;
 using NetworkDataURI = RealTimeNetworkBattleAgent.NetworkDataURI;
 
 namespace ShadowWatcher.Battle

@@ -13,6 +13,11 @@ namespace ShadowWatcher.Replay
 
         public void Loop()
         {
+            if (gameMgr.IsNetworkBattle && gameMgr.IsReplayBattle)
+            {
+                gameMgr.IsAdmin = true;
+            }
+
             if (gameMgr.GetReplayControl() != repController)
             {
                 repController = gameMgr.GetReplayControl();
@@ -30,7 +35,6 @@ namespace ShadowWatcher.Replay
             {
                 ReplayData.Parse(json).Assign();
                 gameMgr._ReplayControl = new ReplayController();
-                Sender.Send("OK.");
             }
             catch(Exception e)
             {

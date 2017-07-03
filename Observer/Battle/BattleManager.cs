@@ -19,11 +19,6 @@ namespace ShadowWatcher.Battle
                     agent = ToolboxGame.RealTimeNetworkBattle;
                     receiverMon = new ReceiverMonitor(agent);
 
-                    if (gameMgr.IsReplayBattle)
-                    {
-                        gameMgr.IsAdmin = true;
-                    }
-
                     Sender.Send("BattleReady.");
                 }
 

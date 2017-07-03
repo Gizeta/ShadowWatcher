@@ -9,6 +9,7 @@
         Closed="Window_Closed">
     <Window.Resources>
         <local:AmountToColorConverter x:Key="AmountToColor"/>
+        <local:BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </Window.Resources>
     
     <Grid>
@@ -22,7 +23,7 @@
 
         <Grid>
             <TabControl x:Name="MainTab">
-                <TabItem Header="Enemy">
+                <TabItem Header="Enemy" Visibility="{Binding Path=Setting.RecordEnemyCard, Converter={StaticResource BoolToVis}}">
                     <ItemsControl ItemsSource="{Binding EnemyDeckList}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -59,7 +60,7 @@
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                 </TabItem>
-                <TabItem Header="Player">
+                <TabItem Header="Player" Visibility="{Binding Path=Setting.RecordPlayerCard, Converter={StaticResource BoolToVis}}">
                     <ItemsControl ItemsSource="{Binding PlayerDeckList}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -96,7 +97,7 @@
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                 </TabItem>
-                <TabItem Header="Replay">
+                <TabItem Header="Replay" Visibility="{Binding Path=Setting.EnhanceReplay, Converter={StaticResource BoolToVis}}">
                     <Grid x:Name="ReplayGrid">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -135,7 +136,10 @@
                 </TabItem>
                 <TabItem Header="Feature">
                     <StackPanel x:Name="SettingPanel" Margin="10">
-                        <CheckBox Content="显示召唤卡" IsChecked="{Binding ShowSummonCard}" />
+                        <CheckBox Content="记录对方手牌" IsChecked="{Binding Path=Setting.RecordEnemyCard}" />
+                        <CheckBox Content="记录自己手牌" IsChecked="{Binding Path=Setting.RecordPlayerCard}" />
+                        <CheckBox Content="扩展回放功能" IsChecked="{Binding Path=Setting.EnhanceReplay}" />
+                        <CheckBox Content="卡牌一览中显示衍生卡牌" IsChecked="{Binding Path=Setting.ShowSummonCard}" />
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="Log">

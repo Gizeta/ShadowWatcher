@@ -15,7 +15,7 @@ namespace ShadowWatcher.Battle
         
         public void CheckReference(BattlePlayer player, BattleEnemy enemy)
         {
-            if (player != null && _player != player)
+            if (player != null && _player != player && Settings.RecordPlayerCard)
             {
                 _player = player;
                 _hasMulligan = false;
@@ -24,7 +24,7 @@ namespace ShadowWatcher.Battle
                 _player.OnAddHandCardEvent += Player_OnAddHandCardEvent;
                 _player.OnAddPlayCardEvent += Player_OnAddPlayCardEvent;
             }
-            if (enemy != null && _enemy != enemy)
+            if (enemy != null && _enemy != enemy && Settings.RecordEnemyCard)
             {
                 _enemy = enemy;
 

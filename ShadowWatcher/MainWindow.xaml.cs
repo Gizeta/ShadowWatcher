@@ -14,6 +14,7 @@ namespace ShadowWatcher
 
         public CardList EnemyDeckList { get; set; } = new CardList();
         public CardList PlayerDeckList { get; set; } = new CardList();
+        public SettingModel Setting { get; set; } = new SettingModel();
 
         public MainWindow()
         {
@@ -23,7 +24,6 @@ namespace ShadowWatcher
             MainTab.IsEnabled = false;
 
             DataContext = this;
-            SettingPanel.DataContext = new SettingModel();
         }
 
         private void attachObserver()

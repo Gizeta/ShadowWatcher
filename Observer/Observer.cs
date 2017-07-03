@@ -33,8 +33,11 @@ namespace ShadowWatcher
         {
             try
             {
-                battleManager.Loop();
-                replayManager.Loop();
+                if (Settings.RecordEnemyCard || Settings.RecordPlayerCard)
+                    battleManager.Loop();
+
+                if (Settings.EnhanceReplay)
+                    replayManager.Loop();
 
                 if (Settings.ShowSummonCard)
                     CardAllListEnhancer.SetUp();
@@ -50,10 +53,12 @@ namespace ShadowWatcher
             switch (action)
             {
                 case "ReplayRequest":
-                    replayManager.InjectReplay(data);
+                    if (Settings.EnhanceReplay)
+                        replayManager.InjectReplay(data);
                     break;
                 case "Setting":
                     Settings.Parse(data);
+                    Sender.Send($"Setting:{data}");
                     break;
             }
         }
