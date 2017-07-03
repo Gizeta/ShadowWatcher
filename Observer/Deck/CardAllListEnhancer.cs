@@ -7,6 +7,10 @@ namespace ShadowWatcher.Deck
     public class CardAllListEnhancer : MonoBehaviour
     {
         private static readonly List<int> summonCards = new List<int> {
+            900011011,
+            900011021,
+            900011031,
+            900011041,
             900021011,
             900031011,
             900041011,
