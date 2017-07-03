@@ -2,9 +2,8 @@
 Shadowverse 辅助工(wán)具(jù)
 
 ## 如何编译
-1. 编译出系统可运行的 `mono-assembly-injector.exe` 文件，放入 `ShadowWatcher/injector/` 文件夹中
-2. 从游戏目录复制 `Assembly-CSharp.dll` 及 `UnityEngine.dll` 文件，放入 `Observer/Libraries/` 文件夹中
-3. 启动 `Visual Studio` 生成可执行文件
+1. 从游戏目录复制 `Assembly-CSharp.dll` 及 `UnityEngine.dll` 文件，放入 `Observer/Libraries/` 文件夹中
+2. 启动 `Visual Studio` 生成可执行文件
 
 ## 如何使用
 1. 启动 `Shadowverse` 程序
