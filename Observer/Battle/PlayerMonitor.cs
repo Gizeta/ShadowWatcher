@@ -23,6 +23,8 @@ namespace ShadowWatcher.Battle
 
                 _player.OnAddHandCardEvent += Player_OnAddHandCardEvent;
                 _player.OnAddPlayCardEvent += Player_OnAddPlayCardEvent;
+                _player.OnAddBanishEvent += Player_OnAddBanishEvent;
+                _player.OnAddCemeteryEvent += Player_OnAddCemeteryEvent;
             }
             if (enemy != null && _enemy != enemy && Settings.RecordEnemyCard)
             {
@@ -40,6 +42,8 @@ namespace ShadowWatcher.Battle
             {
                 _player.OnAddHandCardEvent -= Player_OnAddHandCardEvent;
                 _player.OnAddPlayCardEvent -= Player_OnAddPlayCardEvent;
+                _player.OnAddBanishEvent -= Player_OnAddBanishEvent;
+                _player.OnAddCemeteryEvent -= Player_OnAddCemeteryEvent;
             }
             if (_enemy != null)
             {
@@ -154,6 +158,23 @@ namespace ShadowWatcher.Battle
                 Sender.Send($"PlayerPlayCard:{card.BaseParameter.CardName}");
             }
 #endif
+        }
+
+
+        private void Player_OnAddBanishEvent(BattleCardBase card)
+        {
+            if (card.IsInDeck)
+            {
+                Sender.Send($"PlayerDraw:{CardData.Parse(card)}");
+            }
+        }
+
+        private void Player_OnAddCemeteryEvent(BattleCardBase card, BattlePlayerBase.CEMETERY_TYPE cemeteryType, bool isOpen)
+        {
+            if (card.IsInDeck)
+            {
+                Sender.Send($"PlayerDraw:{CardData.Parse(card)}");
+            }
         }
 
         #endregion
