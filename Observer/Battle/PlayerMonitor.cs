@@ -61,12 +61,6 @@ namespace ShadowWatcher.Battle
             {
                 Sender.Send($"EnemyAdd:{CardData.Parse(card, true)}");
             }
-#if DEBUG
-            else
-            {
-                Sender.Send($"EnemyAddHandCard:{card.BaseParameter.CardName},{fromState.ToString()}");
-            }
-#endif
         }
 
         private void Enemy_OnAddPlayCardEvent(BattleCardBase card)
@@ -75,12 +69,6 @@ namespace ShadowWatcher.Battle
             {
                 Sender.Send($"EnemyPlay:{CardData.Parse(card)}");
             }
-#if DEBUG
-            else
-            {
-                Sender.Send($"EnemyPlayCard:{card.BaseParameter.CardName}");
-            }
-#endif
         }
 
         private void Enemy_OnSpellPlayEvent(BattleCardBase card)
@@ -89,12 +77,6 @@ namespace ShadowWatcher.Battle
             {
                 Sender.Send($"EnemyPlay:{CardData.Parse(card)}");
             }
-#if DEBUG
-            else
-            {
-                Sender.Send($"EnemySpellPlay:{card.BaseParameter.CardName}");
-            }
-#endif
         }
 
         #endregion
@@ -138,12 +120,6 @@ namespace ShadowWatcher.Battle
 
                 Sender.Send($"PlayerDraw:{CardData.Parse(card)}");
             }
-#if DEBUG
-            else
-            {
-                Sender.Send($"PlayerAddHand:{card.BaseParameter.CardName},{fromState.ToString()}");
-            }
-#endif
         }
 
         private void Player_OnAddPlayCardEvent(BattleCardBase card)
@@ -152,12 +128,6 @@ namespace ShadowWatcher.Battle
             {
                 Sender.Send($"PlayerDraw:{CardData.Parse(card)}");
             }
-#if DEBUG
-            else
-            {
-                Sender.Send($"PlayerPlayCard:{card.BaseParameter.CardName}");
-            }
-#endif
         }
 
 

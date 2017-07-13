@@ -1,7 +1,6 @@
 ﻿using ShadowWatcher.Socket;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Wizard;
 using NetworkDataURI = RealTimeNetworkBattleAgent.NetworkDataURI;
 
@@ -24,6 +23,7 @@ namespace ShadowWatcher.Battle
             switch (uri)
             {
                 case NetworkDataURI.SpecialWin:
+                case NetworkDataURI.DeckOutWin:
                 case NetworkDataURI.Retire:
                     if (dict["isWin"].ToString() == "1")
                         Sender.Send("Win.");
@@ -39,26 +39,9 @@ namespace ShadowWatcher.Battle
                     else
                         Sender.Send("Win.");
                     break;
-#if DEBUG
-                case NetworkDataURI.PlayHand:
-                case NetworkDataURI.PlayHandActions:
-                    var str = new List<string>();
-                    if (dict.ContainsKey("knownList"))
-                    {
-                        var list = dict["knownList"] as List<Object>;
-                        foreach (var info in list)
-                        {
-                            var cardInfo = info as Dictionary<string, object>;
-                            var cardId = cardInfo["card_id"].ToInt();
-                            str.Add(CardMaster.GetInstance().GetCardParameterFromId(cardId).CardName);
-                        }
-                    }
-                    Sender.Send($"PlayHand:{str.Aggregate((a, b) => $"{a},{b}")}");
-                    break;
                 default:
                     Sender.Send($"ReceiveMsg:{uri.ToString()}");
                     break;
-#endif
             }
         }
 
