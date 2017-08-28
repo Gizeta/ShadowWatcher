@@ -141,7 +141,7 @@ namespace ShadowWatcher.Battle
 
         private void Player_OnAddCemeteryEvent(BattleCardBase card, BattlePlayerBase.CEMETERY_TYPE cemeteryType, bool isOpen)
         {
-            if (card.IsInDeck)
+            if (card.SelfBattlePlayer != null && card.IsInDeck)
             {
                 Sender.Send($"PlayerDraw:{CardData.Parse(card)}");
             }
