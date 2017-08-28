@@ -52,7 +52,7 @@ namespace ShadowWatcher.Contract
         {
             var param = card.BaseParameter;
             var d = param.CardId.ToString();
-            var id = int.Parse($"{d[3]}{d[5]}{d[2]}{d[6]}{d[7]}{d[0]}");
+            var id = int.Parse($"{d[3]}{d[5]}{d[2]}{d[4]}{d[6]}{d[7]}{(d[0] == '7' ? "1" : d[0].ToString())}");
             var data = new CardData
             {
                 ID = id,
@@ -107,6 +107,6 @@ namespace ShadowWatcher.Contract
 
         public override bool Equals(object obj) => Equals(obj as CardData);
 
-        public override int GetHashCode() => Cost * 100000 + ID;
+        public override int GetHashCode() => Cost * 10000000 + ID;
     }
 }
