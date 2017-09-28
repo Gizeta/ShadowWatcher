@@ -82,6 +82,11 @@ namespace ShadowWatcher.Deck
             900743011,
             900743021,
             900743031,
+
+#if KAMA
+            704341011, // 次元魔女・ドロシー
+            704441011, // インペリアルドラグーン・アルドス
+#endif
         };
 
         public void OnEnable()
