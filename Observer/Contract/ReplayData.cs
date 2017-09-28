@@ -61,6 +61,61 @@ namespace ShadowWatcher.Contract
         public string Type => Data["is_two_pick"].ToBoolean() ? "2 pick" : "构筑";
         public DateTime Time => new DateTime(1970, 1, 1, 0, 0, 0).AddMilliseconds(Data["play_list"]["playlist"][0]["time"].ToLong()).ToLocalTime();
 
+        private static void jsonify(JsonWriter writer, Object obj)
+        {
+            if (obj.GetType() == typeof(string))
+            {
+                writer.Write(obj as string);
+            }
+            else if (obj.GetType() == typeof(JsonData))
+            {
+                var d = obj as JsonData;
+                switch (d.GetJsonType())
+                {
+                    case JsonType.Int:
+                        writer.Write(d.ToInt());
+                        break;
+                    case JsonType.Long:
+                        writer.Write(d.ToLong());
+                        break;
+                    case JsonType.Double:
+                        writer.Write(d.ToDouble());
+                        break;
+                    case JsonType.Boolean:
+                        writer.Write(d.ToBoolean());
+                        break;
+                    default:
+                        writer.Write(d.ToString());
+                        break;
+                }
+            }
+            else if (obj.GetType() == typeof(Dictionary<string, object>))
+            {
+                writer.WriteObjectStart();
+
+                var dict = obj as Dictionary<string, object>;
+                foreach (var key in dict.Keys)
+                {
+                    writer.WritePropertyName(key);
+                    jsonify(writer, dict[key]);
+                }
+
+                writer.WriteObjectEnd();
+            }
+            else if (obj.GetType() == typeof(List<Object>))
+            {
+                writer.WriteArrayStart();
+
+                var list = obj as List<Object>;
+                foreach (object item in list)
+                {
+                    jsonify(writer, item);
+                }
+
+                writer.WriteArrayEnd();
+            }
+        }
+
         public static ReplayData Parse(ReplayDetail detail)
         {
             var w = new JsonWriter();
@@ -78,85 +133,8 @@ namespace ShadowWatcher.Contract
             w.WriteObjectStart();
             foreach (var key in detail.play_list.Keys)
             {
-                if (detail.play_list[key].GetType() == typeof(string))
-                {
-                    w.WritePropertyName(key);
-                    w.Write(detail.play_list[key] as string);
-                }
-                else
-                {
-                    w.WritePropertyName(key);
-                    w.WriteArrayStart();
-                    var list = detail.play_list[key] as List<object>;
-                    foreach (Dictionary<string, object> item in list)
-                    {
-                        w.WriteObjectStart();
-                        foreach (var k in item.Keys)
-                        {
-                            if (item[k].GetType() == typeof(JsonData))
-                            {
-                                w.WritePropertyName(k);
-                                var d = item[k] as JsonData;
-                                switch (d.GetJsonType())
-                                {
-                                    case JsonType.Int:
-                                        w.Write(d.ToInt());
-                                        break;
-                                    case JsonType.Long:
-                                        w.Write(d.ToLong());
-                                        break;
-                                    case JsonType.Double:
-                                        w.Write(d.ToDouble());
-                                        break;
-                                    case JsonType.Boolean:
-                                        w.Write(d.ToBoolean());
-                                        break;
-                                    default:
-                                        w.Write(d.ToString());
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                w.WritePropertyName(k);
-                                w.WriteArrayStart();
-                                var l = item[k] as List<object>;
-                                foreach (Dictionary<string, object> i in l)
-                                {
-                                    w.WriteObjectStart();
-
-                                    foreach (var k2 in i.Keys)
-                                    {
-                                        w.WritePropertyName(k2);
-                                        var d = i[k2] as JsonData;
-                                        switch (d.GetJsonType())
-                                        {
-                                            case JsonType.Int:
-                                                w.Write(d.ToInt());
-                                                break;
-                                            case JsonType.Long:
-                                                w.Write(d.ToLong());
-                                                break;
-                                            case JsonType.Double:
-                                                w.Write(d.ToDouble());
-                                                break;
-                                            case JsonType.Boolean:
-                                                w.Write(d.ToBoolean());
-                                                break;
-                                            default:
-                                                w.Write(d.ToString());
-                                                break;
-                                        }
-                                    }
-                                    w.WriteObjectEnd();
-                                }
-                                w.WriteArrayEnd();
-                            }
-                        }
-                        w.WriteObjectEnd();
-                    }
-                    w.WriteArrayEnd();
-                }
+                w.WritePropertyName(key);
+                jsonify(w, detail.play_list[key]);
             }
             w.WriteObjectEnd();
 
