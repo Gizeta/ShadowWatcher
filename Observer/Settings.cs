@@ -10,7 +10,7 @@
         public static bool RecordEnemyCard { get; set; } = true;
         public static bool RecordPlayerCard { get; set; } = true;
         public static bool EnhanceReplay { get; set; } = true;
-        public static bool ShowSummonCard { get; set; } = false;
+        public static bool ShowSummonCard { get; set; } = true;
 
         public static void Parse(string data)
         {
