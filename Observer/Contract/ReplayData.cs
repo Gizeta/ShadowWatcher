@@ -55,7 +55,7 @@ namespace ShadowWatcher.Contract
         public string OppoName => Data["opponent_name"].ToString();
         public string OppoCountryCode => Data["opponent_country_code"].ToString();
         public string OppoRank => ConstData.Rank[Data["opponent_rank"].ToInt()];
-        public string OppoClass => ConstData.Class[Data["opponent_chara_id"].ToInt()];
+        public string OppoClass => ConstData.Class[Data["opponent_chara_id"].ToInt() % 10];
 
         public string Result => Data["is_win"].ToBoolean() ? "Win" : "Lose";
         public string Type => Data["is_two_pick"].ToBoolean() ? "2 pick" : "构筑";
