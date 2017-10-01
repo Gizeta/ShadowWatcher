@@ -142,6 +142,7 @@
                         <CheckBox Content="记录自己手牌" IsChecked="{Binding Path=Setting.RecordPlayerCard}" />
                         <CheckBox Content="扩展回放功能" IsChecked="{Binding Path=Setting.EnhanceReplay}" />
                         <CheckBox Content="卡牌一览中显示衍生卡牌" IsChecked="{Binding Path=Setting.ShowSummonCard}" />
+                        <CheckBox Content="优先导入珍稀卡牌" IsChecked="{Binding Path=Setting.CopyAnimatedCardFirst}" />
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="Log">

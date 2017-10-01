@@ -41,6 +41,9 @@ namespace ShadowWatcher
 
                 if (Settings.ShowSummonCard)
                     CardAllListEnhancer.SetUp();
+
+                if (Settings.CopyAnimatedCardFirst)
+                    DeckCardEditUIEnhancer.SetUp();
             }
             catch (Exception e)
             {

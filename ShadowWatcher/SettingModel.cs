@@ -74,6 +74,19 @@ namespace ShadowWatcher
             }
         }
 
+        public bool CopyAnimatedCardFirst
+        {
+            get => Settings.CopyAnimatedCardFirst;
+            set
+            {
+                if (Settings.CopyAnimatedCardFirst != value)
+                {
+                    Settings.CopyAnimatedCardFirst = value;
+                    NotifyPropertyChanged("CopyAnimatedCardFirst");
+                }
+            }
+        }
+
         public void Save()
         {
             var writer = new StreamWriter(new IsolatedStorageFileStream("setting", FileMode.Create, storage));
