@@ -7,12 +7,14 @@
         public const int ENHANCE_REPLAY = 0x4;
         public const int SHOW_SUMMON_CARD = 0x8;
         public const int COPY_ANIMATED_CARD_FIRST = 0x10;
+        public const int SHOW_COUNTDOWN = 0x20;
 
         public static bool RecordEnemyCard { get; set; } = true;
         public static bool RecordPlayerCard { get; set; } = true;
         public static bool EnhanceReplay { get; set; } = true;
         public static bool ShowSummonCard { get; set; } = true;
         public static bool CopyAnimatedCardFirst { get; set; } = true;
+        public static bool ShowCountdown { get; set; } = true;
 
         public static void Parse(string data)
         {
@@ -22,6 +24,7 @@
             EnhanceReplay = (flag & ENHANCE_REPLAY) > 0;
             ShowSummonCard = (flag & SHOW_SUMMON_CARD) > 0;
             CopyAnimatedCardFirst = (flag & COPY_ANIMATED_CARD_FIRST) > 0;
+            ShowCountdown = (flag & SHOW_COUNTDOWN) > 0;
         }
 
         public static new string ToString()
@@ -32,6 +35,7 @@
             flag |= EnhanceReplay ? ENHANCE_REPLAY : 0;
             flag |= ShowSummonCard ? SHOW_SUMMON_CARD : 0;
             flag |= CopyAnimatedCardFirst ? COPY_ANIMATED_CARD_FIRST : 0;
+            flag |= ShowCountdown ? SHOW_COUNTDOWN : 0;
             return flag.ToString();
         }
     }

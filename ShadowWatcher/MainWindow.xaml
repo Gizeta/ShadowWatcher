@@ -19,6 +19,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid>
@@ -143,6 +144,7 @@
                         <CheckBox Content="扩展回放功能" IsChecked="{Binding Path=Setting.EnhanceReplay}" />
                         <CheckBox Content="卡牌一览中显示衍生卡牌" IsChecked="{Binding Path=Setting.ShowSummonCard}" />
                         <CheckBox Content="优先导入珍稀卡牌" IsChecked="{Binding Path=Setting.CopyAnimatedCardFirst}" />
+                        <CheckBox Content="显示回合倒计时" IsChecked="{Binding Path=Setting.ShowCountdown}" />
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="Log">
@@ -150,8 +152,20 @@
                 </TabItem>
             </TabControl>
         </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid x:Name="CountdownGrid" Height="16" Visibility="{Binding Path=IsVisible, Converter={StaticResource BoolToVis}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5*" />
+                </Grid.ColumnDefinitions>
+                <ProgressBar Value="{Binding Progress2}" Foreground="#ED1C24" />
+                <ProgressBar Grid.Column="1" Value="{Binding Progress1}" Foreground="#22B14C" />
+                <TextBlock Grid.ColumnSpan="2" TextAlignment="Right" Margin="0,0,10,0" Text="{Binding ProgressText}" />
+            </Grid>
+        </Grid>
         
-        <Button Content="Attach/Detach" Grid.Row="1" Width="100" Height="30" Margin="10" Click="AttachButton_Click"/>
+        <Button Content="Attach/Detach" Grid.Row="2" Width="100" Height="30" Margin="10" Click="AttachButton_Click"/>
         
     </Grid>
 </Window>

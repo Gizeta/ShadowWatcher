@@ -15,16 +15,25 @@ namespace ShadowWatcher.Battle
         
         public void CheckReference(BattlePlayer player, BattleEnemy enemy)
         {
-            if (player != null && _player != player && Settings.RecordPlayerCard)
+            if (player != null && _player != player)
             {
                 _player = player;
-                _hasMulligan = false;
-                _hasPlayerDrawn = false;
 
-                _player.OnAddHandCardEvent += Player_OnAddHandCardEvent;
-                _player.OnAddPlayCardEvent += Player_OnAddPlayCardEvent;
-                _player.OnAddBanishEvent += Player_OnAddBanishEvent;
-                _player.OnAddCemeteryEvent += Player_OnAddCemeteryEvent;
+                if (Settings.RecordPlayerCard)
+                {
+                    _hasMulligan = false;
+                    _hasPlayerDrawn = false;
+
+                    _player.OnAddHandCardEvent += Player_OnAddHandCardEvent;
+                    _player.OnAddPlayCardEvent += Player_OnAddPlayCardEvent;
+                    _player.OnAddBanishEvent += Player_OnAddBanishEvent;
+                    _player.OnAddCemeteryEvent += Player_OnAddCemeteryEvent;
+                }
+                if (Settings.ShowCountdown)
+                {
+                    _player.OnPlayerActive += Player_OnPlayerActive;
+                    _player.OnSendTurnEnd += Player_OnSendTurnEnd;
+                }
             }
             if (enemy != null && _enemy != enemy && Settings.RecordEnemyCard)
             {
@@ -44,6 +53,8 @@ namespace ShadowWatcher.Battle
                 _player.OnAddPlayCardEvent -= Player_OnAddPlayCardEvent;
                 _player.OnAddBanishEvent -= Player_OnAddBanishEvent;
                 _player.OnAddCemeteryEvent -= Player_OnAddCemeteryEvent;
+                _player.OnPlayerActive -= Player_OnPlayerActive;
+                _player.OnSendTurnEnd -= Player_OnSendTurnEnd;
             }
             if (_enemy != null)
             {
@@ -145,6 +156,16 @@ namespace ShadowWatcher.Battle
             {
                 Sender.Send($"PlayerDraw:{CardData.Parse(card)}");
             }
+        }
+
+        private void Player_OnPlayerActive()
+        {
+            Sender.Send("Countdown.");
+        }
+
+        private void Player_OnSendTurnEnd()
+        {
+            Sender.Send("PlayerTurnEnd.");
         }
 
         #endregion

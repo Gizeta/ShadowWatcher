@@ -15,6 +15,7 @@ namespace ShadowWatcher
         public CardList EnemyDeckList { get; set; } = new CardList();
         public CardList PlayerDeckList { get; set; } = new CardList();
         public SettingModel Setting { get; set; } = new SettingModel();
+        public Countdown Countdown { get; set; } = new Countdown();
 
         public MainWindow()
         {
@@ -24,6 +25,7 @@ namespace ShadowWatcher
             MainTab.IsEnabled = false;
 
             DataContext = this;
+            CountdownGrid.DataContext = Countdown;
         }
 
         private void attachObserver()
@@ -63,6 +65,7 @@ namespace ShadowWatcher
                     Dispatcher.Invoke(() =>
                     {
                         EnemyDeckList.Clear();
+                        Countdown.IsVisible = true;
                     });
                     break;
                 case "Load":
@@ -101,6 +104,16 @@ namespace ShadowWatcher
                     {
                         ReplayGrid.DataContext = ReplayData.Parse(data);
                     });
+                    break;
+                case "Countdown":
+                    Countdown.Start();
+                    break;
+                case "PlayerTurnEnd":
+                    Countdown.Stop();
+                    break;
+                case "Win":
+                case "Lose":
+                    Countdown.IsVisible = false;
                     break;
             }
             Dispatcher.Invoke(() =>

@@ -33,7 +33,7 @@ namespace ShadowWatcher
         {
             try
             {
-                if (Settings.RecordEnemyCard || Settings.RecordPlayerCard)
+                if (Settings.RecordEnemyCard || Settings.RecordPlayerCard || Settings.ShowCountdown)
                     battleManager.Loop();
 
                 if (Settings.EnhanceReplay)

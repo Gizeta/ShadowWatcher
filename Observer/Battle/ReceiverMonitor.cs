@@ -39,8 +39,11 @@ namespace ShadowWatcher.Battle
                     else
                         Sender.Send("Win.");
                     break;
-                default:
-                    Sender.Send($"ReceiveMsg:{uri.ToString()}");
+                case NetworkDataURI.OppoConnect:
+                    Sender.Send("OppoConnect");
+                    break;
+                case NetworkDataURI.OppoDisconnect:
+                    Sender.Send("OppoDisconnect.");
                     break;
             }
         }

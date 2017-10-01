@@ -87,6 +87,19 @@ namespace ShadowWatcher
             }
         }
 
+        public bool ShowCountdown
+        {
+            get => Settings.ShowCountdown;
+            set
+            {
+                if (Settings.ShowCountdown != value)
+                {
+                    Settings.ShowCountdown = value;
+                    NotifyPropertyChanged("ShowCountdown");
+                }
+            }
+        }
+
         public void Save()
         {
             var writer = new StreamWriter(new IsolatedStorageFileStream("setting", FileMode.Create, storage));
