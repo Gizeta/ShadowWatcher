@@ -145,6 +145,7 @@
                         <CheckBox Content="卡牌一览中显示衍生卡牌" IsChecked="{Binding Path=Setting.ShowSummonCard}" />
                         <CheckBox Content="优先导入珍稀卡牌" IsChecked="{Binding Path=Setting.CopyAnimatedCardFirst}" />
                         <CheckBox Content="显示回合倒计时" IsChecked="{Binding Path=Setting.ShowCountdown}" />
+                        <CheckBox Content="使用键盘快捷键过滤卡牌" IsChecked="{Binding Path=Setting.KeyboardFilterShortcut}" />
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="Log">

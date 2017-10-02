@@ -8,6 +8,7 @@
         public const int SHOW_SUMMON_CARD = 0x8;
         public const int COPY_ANIMATED_CARD_FIRST = 0x10;
         public const int SHOW_COUNTDOWN = 0x20;
+        public const int KEYBOARD_FILTER_SHORTCUT = 0x40;
 
         public static bool RecordEnemyCard { get; set; } = true;
         public static bool RecordPlayerCard { get; set; } = true;
@@ -15,6 +16,7 @@
         public static bool ShowSummonCard { get; set; } = true;
         public static bool CopyAnimatedCardFirst { get; set; } = true;
         public static bool ShowCountdown { get; set; } = true;
+        public static bool KeyboardFilterShortcut { get; set; } = true;
 
         public static void Parse(string data)
         {
@@ -25,6 +27,7 @@
             ShowSummonCard = (flag & SHOW_SUMMON_CARD) > 0;
             CopyAnimatedCardFirst = (flag & COPY_ANIMATED_CARD_FIRST) > 0;
             ShowCountdown = (flag & SHOW_COUNTDOWN) > 0;
+            KeyboardFilterShortcut = (flag & KEYBOARD_FILTER_SHORTCUT) > 0;
         }
 
         public static new string ToString()
@@ -36,6 +39,7 @@
             flag |= ShowSummonCard ? SHOW_SUMMON_CARD : 0;
             flag |= CopyAnimatedCardFirst ? COPY_ANIMATED_CARD_FIRST : 0;
             flag |= ShowCountdown ? SHOW_COUNTDOWN : 0;
+            flag |= KeyboardFilterShortcut ? KEYBOARD_FILTER_SHORTCUT : 0;
             return flag.ToString();
         }
     }

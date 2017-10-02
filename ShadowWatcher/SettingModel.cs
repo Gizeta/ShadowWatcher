@@ -100,6 +100,19 @@ namespace ShadowWatcher
             }
         }
 
+        public bool KeyboardFilterShortcut
+        {
+            get => Settings.KeyboardFilterShortcut;
+            set
+            {
+                if (Settings.KeyboardFilterShortcut != value)
+                {
+                    Settings.KeyboardFilterShortcut = value;
+                    NotifyPropertyChanged("KeyboardFilterShortcut");
+                }
+            }
+        }
+
         public void Save()
         {
             var writer = new StreamWriter(new IsolatedStorageFileStream("setting", FileMode.Create, storage));

@@ -53,6 +53,7 @@
     <Compile Include="Contract\ReplayData.cs" />
     <Compile Include="Deck\CardAllListEnhancer.cs" />
     <Compile Include="Deck\DeckCardEditUIEnhancer.cs" />
+    <Compile Include="Deck\DeckUIHelper.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Observer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
