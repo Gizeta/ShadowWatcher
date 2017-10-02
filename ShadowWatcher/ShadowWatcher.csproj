@@ -110,6 +110,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Blackbone-LICENSE">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\LICENSE">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\README.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SVInjector.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
