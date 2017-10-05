@@ -26,24 +26,24 @@ namespace ShadowWatcher.Battle
                 case NetworkDataURI.DeckOutWin:
                 case NetworkDataURI.Retire:
                     if (dict["isWin"].ToString() == "1")
-                        Sender.Send("Win.");
+                        Sender.Send("Win");
                     else
-                        Sender.Send("Lose.");
+                        Sender.Send("Lose");
                     break;
                 case NetworkDataURI.BattleFinish:
                     var code = (int)ToolboxGame.RealTimeNetworkBattle.GetBattleManager().JudgeCurrentFinishStatus();
                     if (code < 0x60 || code > 0xff)
                         break;
                     if (code % 2 == 0)
-                        Sender.Send("Lose.");
+                        Sender.Send("Lose");
                     else
-                        Sender.Send("Win.");
+                        Sender.Send("Win");
                     break;
                 case NetworkDataURI.OppoConnect:
-                    Sender.Send("OppoConnect.");
+                    Sender.Send("OppoConnect");
                     break;
                 case NetworkDataURI.OppoDisconnect:
-                    Sender.Send("OppoDisconnect.");
+                    Sender.Send("OppoDisconnect");
                     break;
             }
         }

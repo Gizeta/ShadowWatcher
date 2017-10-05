@@ -70,7 +70,7 @@ namespace ShadowWatcher
                     break;
                 case "Load":
                     Sender.Initialize(int.Parse(data));
-                    Sender.Send($"Setting:{Settings.ToString()}");
+                    Sender.Send("Setting", $"{Settings.ToString()}");
                     break;
                 case "EnemyPlay":
                 case "EnemyAdd":
@@ -162,7 +162,7 @@ namespace ShadowWatcher
 
                 ReplayGrid.DataContext = ReplayData.Parse(json);
 
-                Sender.Send($"ReplayRequest:{json}");
+                Sender.Send("ReplayRequest", $"{json}");
             }
         }
     }

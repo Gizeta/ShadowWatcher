@@ -19,7 +19,7 @@ namespace ShadowWatcher.Battle
                     agent = ToolboxGame.RealTimeNetworkBattle;
                     receiverMon = new ReceiverMonitor(agent);
 
-                    Sender.Send("BattleReady.");
+                    Sender.Send("BattleReady");
                 }
 
                 var battleMgr = agent.GetBattleManager();

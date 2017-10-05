@@ -70,7 +70,7 @@ namespace ShadowWatcher.Battle
         {
             if (fromState == NetworkCardPlaceState.None || fromState == NetworkCardPlaceState.Field)
             {
-                Sender.Send($"EnemyAdd:{CardData.Parse(card, true)}");
+                Sender.Send("EnemyAdd", $"{CardData.Parse(card, true)}");
             }
         }
 
@@ -78,7 +78,7 @@ namespace ShadowWatcher.Battle
         {
             if (card.IsInHand || card.IsInDeck)
             {
-                Sender.Send($"EnemyPlay:{CardData.Parse(card)}");
+                Sender.Send("EnemyPlay", $"{CardData.Parse(card)}");
             }
         }
 
@@ -86,7 +86,7 @@ namespace ShadowWatcher.Battle
         {
             if (card.IsInHand || card.IsInDeck)
             {
-                Sender.Send($"EnemyPlay:{CardData.Parse(card)}");
+                Sender.Send("EnemyPlay", $"{CardData.Parse(card)}");
             }
         }
 
@@ -115,7 +115,7 @@ namespace ShadowWatcher.Battle
                     }
                 }
 
-                Sender.Send($"PlayerDeck:{cardList.Aggregate((sum, s) => $"{sum}\n{s}")}");
+                Sender.Send("PlayerDeck", $"{cardList.Aggregate((sum, s) => $"{sum}\n{s}")}");
             }
             else if (fromState == NetworkCardPlaceState.Stock && _player.Turn > 0)
             {
@@ -125,11 +125,11 @@ namespace ShadowWatcher.Battle
 
                     foreach (var c in _player.HandCardList)
                     {
-                        Sender.Send($"PlayerDraw:{CardData.Parse(c)}");
+                        Sender.Send("PlayerDraw", $"{CardData.Parse(c)}");
                     }
                 }
 
-                Sender.Send($"PlayerDraw:{CardData.Parse(card)}");
+                Sender.Send("PlayerDraw", $"{CardData.Parse(card)}");
             }
         }
 
@@ -137,7 +137,7 @@ namespace ShadowWatcher.Battle
         {
             if (card.IsInDeck)
             {
-                Sender.Send($"PlayerDraw:{CardData.Parse(card)}");
+                Sender.Send("PlayerDraw", $"{CardData.Parse(card)}");
             }
         }
 
@@ -146,7 +146,7 @@ namespace ShadowWatcher.Battle
         {
             if (card.IsInDeck)
             {
-                Sender.Send($"PlayerDraw:{CardData.Parse(card)}");
+                Sender.Send("PlayerDraw", $"{CardData.Parse(card)}");
             }
         }
 
@@ -154,18 +154,18 @@ namespace ShadowWatcher.Battle
         {
             if (card.SelfBattlePlayer != null && card.IsInDeck)
             {
-                Sender.Send($"PlayerDraw:{CardData.Parse(card)}");
+                Sender.Send("PlayerDraw", $"{CardData.Parse(card)}");
             }
         }
 
         private void Player_OnPlayerActive()
         {
-            Sender.Send("Countdown.");
+            Sender.Send("Countdown");
         }
 
         private void Player_OnSendTurnEnd()
         {
-            Sender.Send("PlayerTurnEnd.");
+            Sender.Send("PlayerTurnEnd");
         }
 
         #endregion

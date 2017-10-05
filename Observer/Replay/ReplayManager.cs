@@ -24,7 +24,7 @@ namespace ShadowWatcher.Replay
 
                 if (repController != null)
                 {
-                    Sender.Send($"ReplayDetail:{ReplayData.Parse(Data.ReplayBattleInfo)}");
+                    Sender.Send("ReplayDetail", $"{ReplayData.Parse(Data.ReplayBattleInfo)}");
                 }
             }
         }
@@ -38,7 +38,7 @@ namespace ShadowWatcher.Replay
             }
             catch(Exception e)
             {
-                Sender.Send($"Error:{e.Message}\n{e.StackTrace}");
+                Sender.Send("Error", $"{e.Message}\n{e.StackTrace}");
             }
         }
     }

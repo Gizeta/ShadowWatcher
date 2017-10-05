@@ -19,12 +19,12 @@ namespace ShadowWatcher
 
             Receiver.OnReceived = Receiver_OnReceived;
 
-            Sender.Send($"Load:{Receiver.ListenPort}");
+            Sender.Send("Load", $"{Receiver.ListenPort}");
         }
 
         public void OnDestroy()
         {
-            Sender.Send("Unload.");
+            Sender.Send("Unload");
             Sender.Destroy();
             Receiver.Destroy();
         }
@@ -47,7 +47,7 @@ namespace ShadowWatcher
             }
             catch (Exception e)
             {
-                Sender.Send($"Error:{e.Message}\n{e.StackTrace}");
+                Sender.Send("Error", $"{e.Message}\n{e.StackTrace}");
             }
         }
 
@@ -61,7 +61,7 @@ namespace ShadowWatcher
                     break;
                 case "Setting":
                     Settings.Parse(data);
-                    Sender.Send($"Setting:{data}");
+                    Sender.Send("Setting", $"{data}");
                     break;
             }
         }

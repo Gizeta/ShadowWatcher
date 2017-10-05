@@ -15,9 +15,9 @@ namespace ShadowWatcher.Socket
             dstIP = new IPEndPoint(IPAddress.Loopback, port);
         }
 
-        public static void Send(string str)
+        public static void Send(string command, string data = "")
         {
-            var buf = Encoding.UTF8.GetBytes(str);
+            var buf = Encoding.UTF8.GetBytes($"{command}{(data == "" ? "." : $":{data}")}");
             if (client != null)
                 client.Send(buf, buf.Length, dstIP);
         }

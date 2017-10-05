@@ -39,7 +39,7 @@ namespace ShadowWatcher.Deck
                 }
 
                 DeckCardEditUI.CopySrcDeckData.SetCardIdList(list);
-                Sender.Send("ReplaceAnimatedCard.");
+                Sender.Send("ReplaceWithAnimatedCard");
             }
         }
 
@@ -55,133 +55,133 @@ namespace ShadowWatcher.Deck
                     if (Input.GetKeyDown(KeyCode.Alpha1))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 1);
-                        Sender.Send("Keyboard:1");
+                        Sender.Send("Keyboard", "1");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha2))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 2);
-                        Sender.Send("Keyboard:2");
+                        Sender.Send("Keyboard", "2");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha3))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 3);
-                        Sender.Send("Keyboard:3");
+                        Sender.Send("Keyboard", "3");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha4))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 4);
-                        Sender.Send("Keyboard:4");
+                        Sender.Send("Keyboard", "4");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha5))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 5);
-                        Sender.Send("Keyboard:5");
+                        Sender.Send("Keyboard", "5");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha6))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 6);
-                        Sender.Send("Keyboard:6");
+                        Sender.Send("Keyboard", "6");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha7))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 7);
-                        Sender.Send("Keyboard:7");
+                        Sender.Send("Keyboard", "7");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha8))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 8);
-                        Sender.Send("Keyboard:8");
+                        Sender.Send("Keyboard", "8");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha9))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 0);
-                        Sender.Send("Keyboard:9");
+                        Sender.Send("Keyboard", "9");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha0))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 0);
-                        Sender.Send("Keyboard:0");
+                        Sender.Send("Keyboard", "0");
                     }
                     #endregion
                     #region Class
                     else if (Input.GetKeyDown(KeyCode.Q))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.CLASS, 1);
-                        Sender.Send("Keyboard:Q");
+                        Sender.Send("Keyboard", "Q");
                     }
                     else if (Input.GetKeyDown(KeyCode.W))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.CLASS, 2);
-                        Sender.Send("Keyboard:W");
+                        Sender.Send("Keyboard", "W");
                     }
                     else if (Input.GetKeyDown(KeyCode.E))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.CLASS, 0);
-                        Sender.Send("Keyboard:E");
+                        Sender.Send("Keyboard", "E");
                     }
                     else if (Input.GetKeyDown(KeyCode.R))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.CLASS, 0);
-                        Sender.Send("Keyboard:R");
+                        Sender.Send("Keyboard", "R");
                     }
                     #endregion
                     #region Type
                     else if (Input.GetKeyDown(KeyCode.A))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.TYPE, 1);
-                        Sender.Send("Keyboard:A");
+                        Sender.Send("Keyboard", "A");
                     }
                     else if (Input.GetKeyDown(KeyCode.S))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.TYPE, 2);
-                        Sender.Send("Keyboard:S");
+                        Sender.Send("Keyboard", "S");
                     }
                     else if (Input.GetKeyDown(KeyCode.D))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.TYPE, 3);
-                        Sender.Send("Keyboard:D");
+                        Sender.Send("Keyboard", "D");
                     }
                     else if (Input.GetKeyDown(KeyCode.F))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.TYPE, 0);
-                        Sender.Send("Keyboard:F");
+                        Sender.Send("Keyboard", "F");
                     }
                     else if (Input.GetKeyDown(KeyCode.G))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.TYPE, 0);
-                        Sender.Send("Keyboard:G");
+                        Sender.Send("Keyboard", "G");
                     }
                     #endregion
                     #region Rarity
                     else if (Input.GetKeyDown(KeyCode.Z))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.RARITY, 1);
-                        Sender.Send("Keyboard:Z");
+                        Sender.Send("Keyboard", "Z");
                     }
                     else if (Input.GetKeyDown(KeyCode.X))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.RARITY, 2);
-                        Sender.Send("Keyboard:X");
+                        Sender.Send("Keyboard", "X");
                     }
                     else if (Input.GetKeyDown(KeyCode.C))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.RARITY, 3);
-                        Sender.Send("Keyboard:C");
+                        Sender.Send("Keyboard", "C");
                     }
                     else if (Input.GetKeyDown(KeyCode.V))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.RARITY, 4);
-                        Sender.Send("Keyboard:V");
+                        Sender.Send("Keyboard", "V");
                     }
                     else if (Input.GetKeyDown(KeyCode.B))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.RARITY, 0);
-                        Sender.Send("Keyboard:B");
+                        Sender.Send("Keyboard", "B");
                     }
                     else if (Input.GetKeyDown(KeyCode.N))
                     {
                         filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.RARITY, 0);
-                        Sender.Send("Keyboard:N");
+                        Sender.Send("Keyboard", "N");
                     }
                     #endregion
                 }
