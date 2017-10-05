@@ -103,28 +103,6 @@ namespace ShadowWatcher.Deck
                         Sender.Send("Keyboard", "0");
                     }
                     #endregion
-                    #region Class
-                    else if (Input.GetKeyDown(KeyCode.Q))
-                    {
-                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.CLASS, 1);
-                        Sender.Send("Keyboard", "Q");
-                    }
-                    else if (Input.GetKeyDown(KeyCode.W))
-                    {
-                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.CLASS, 2);
-                        Sender.Send("Keyboard", "W");
-                    }
-                    else if (Input.GetKeyDown(KeyCode.E))
-                    {
-                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.CLASS, 0);
-                        Sender.Send("Keyboard", "E");
-                    }
-                    else if (Input.GetKeyDown(KeyCode.R))
-                    {
-                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.CLASS, 0);
-                        Sender.Send("Keyboard", "R");
-                    }
-                    #endregion
                     #region Type
                     else if (Input.GetKeyDown(KeyCode.A))
                     {
