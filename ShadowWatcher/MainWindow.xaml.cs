@@ -65,7 +65,6 @@ namespace ShadowWatcher
                     Dispatcher.Invoke(() =>
                     {
                         EnemyDeckList.Clear();
-                        Countdown.IsVisible = true;
                     });
                     break;
                 case "Load":
@@ -110,10 +109,6 @@ namespace ShadowWatcher
                     break;
                 case "PlayerTurnEnd":
                     Countdown.Stop();
-                    break;
-                case "Win":
-                case "Lose":
-                    Countdown.IsVisible = false;
                     break;
             }
             Dispatcher.Invoke(() =>

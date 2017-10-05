@@ -34,7 +34,7 @@ namespace ShadowWatcher
         public bool IsVisible
         {
             get => isVisible && Settings.ShowCountdown;
-            set => SetProperty(ref isVisible, value);
+            private set => SetProperty(ref isVisible, value);
         }
 
         public Countdown()
@@ -47,6 +47,7 @@ namespace ShadowWatcher
         public void Start()
         {
             startTime = DateTime.Now;
+            IsVisible = true;
             timer.Stop();
             timer.Start();
         }
@@ -54,6 +55,7 @@ namespace ShadowWatcher
         public void Stop()
         {
             timer.Stop();
+            IsVisible = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -75,7 +77,7 @@ namespace ShadowWatcher
             var duration = TimeSpan.FromSeconds(90) - (DateTime.Now - startTime);
             if (duration <= TimeSpan.Zero)
             {
-                timer.Stop();
+                Stop();
                 Progress1 = 0;
                 Progress2 = 0;
                 ProgressText = "0s";
