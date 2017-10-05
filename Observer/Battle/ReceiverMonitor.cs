@@ -40,7 +40,7 @@ namespace ShadowWatcher.Battle
                         Sender.Send("Win.");
                     break;
                 case NetworkDataURI.OppoConnect:
-                    Sender.Send("OppoConnect");
+                    Sender.Send("OppoConnect.");
                     break;
                 case NetworkDataURI.OppoDisconnect:
                     Sender.Send("OppoDisconnect.");
