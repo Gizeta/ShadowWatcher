@@ -119,7 +119,7 @@ namespace ShadowWatcher
             writer.Write(Settings.ToString());
             writer.Close();
 
-            Sender.Send($"Setting:{Settings.ToString()}");
+            Sender.Send("Setting", Settings.ToString());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
