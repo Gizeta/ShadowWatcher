@@ -13,7 +13,7 @@ namespace ShadowWatcher.Contract
             "B0", "B1", "B2", "B3",
             "A0", "A1", "A2", "A3",
             "AA0", "AA1", "AA2", "AA3",
-            "Master"
+            "Master", "Grand Master"
         };
 
         public static List<string> Class = new List<string>
