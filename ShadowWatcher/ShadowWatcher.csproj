@@ -119,6 +119,7 @@
     <None Include="..\README.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="ShadowWatcher.licenseheader" />
     <None Include="SVInjector.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

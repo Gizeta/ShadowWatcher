@@ -68,6 +68,7 @@
   <ItemGroup>
     <None Include="Libraries\Assembly-CSharp.dll" />
     <None Include="Libraries\UnityEngine.dll" />
+    <None Include="Observer.licenseheader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
