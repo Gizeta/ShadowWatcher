@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using ShadowWatcher.Helper;
 using ShadowWatcher.Socket;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace ShadowWatcher.Battle
                         Sender.Send("Lose");
                     break;
                 case NetworkDataURI.BattleFinish:
-                    var code = (int)ToolboxGame.RealTimeNetworkBattle.GetBattleManager().JudgeCurrentFinishStatus();
+                    var code = (int)ToolboxGame.RealTimeNetworkBattle.GetField<NetworkBattleManagerBase>("networkBattleMgr").JudgeCurrentFinishStatus();
                     if (code < 0x60 || code > 0xff)
                         break;
                     if (code % 2 == 0)

@@ -24,22 +24,23 @@ namespace ShadowWatcher.Helper
                                            BindingFlags.Static |
                                            BindingFlags.Instance;
 
-        public static FieldInfo GetField<T>(this T obj, string name)
-            where T : class
+        public static T GetField<T>(this Object obj, string name)
         {
-            return typeof(T).GetField(name, flags);
+            return (T)obj.GetType().GetField(name, flags).GetValue(obj);
         }
 
-        public static PropertyInfo GetProperty<T>(this T obj, string name)
-            where T : class
+        public static T GetProperty<T>(this Object obj, string name)
         {
-            return typeof(T).GetProperty(name, flags);
+            return (T)obj.GetType().GetProperty(name, flags).GetValue(obj, null);
         }
 
-        public static MethodInfo GetMethod<T>(this T obj, string name)
-            where T : class
+        public static void InvokeMethod(this Object obj, string name, params object[] param)
         {
-            return typeof(T).GetMethod(name, flags | BindingFlags.OptionalParamBinding);
+            obj.GetType().GetMethod(name, flags | BindingFlags.OptionalParamBinding).Invoke(obj, param);
+        }
+        public static T InvokeMethod<T>(this Object obj, string name, params object[] param)
+        {
+            return (T)obj.GetType().GetMethod(name, flags | BindingFlags.OptionalParamBinding).Invoke(obj, param);
         }
     }
 }

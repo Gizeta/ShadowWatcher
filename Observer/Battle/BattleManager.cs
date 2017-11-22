@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using ShadowWatcher.Helper;
 using ShadowWatcher.Socket;
 using Wizard;
 
@@ -36,7 +37,7 @@ namespace ShadowWatcher.Battle
                     Sender.Send("BattleReady");
                 }
 
-                var battleMgr = agent.GetBattleManager();
+                var battleMgr = agent.GetField<NetworkBattleManagerBase>("networkBattleMgr");
                 if (battleMgr != null)
                 {
                     playerMon.CheckReference(battleMgr.BattlePlayer, battleMgr.BattleEnemy);

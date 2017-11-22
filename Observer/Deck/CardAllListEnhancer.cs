@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using ShadowWatcher.Helper;
 using ShadowWatcher.Socket;
 using System.Collections.Generic;
 using UnityEngine;
@@ -136,7 +137,7 @@ namespace ShadowWatcher.Deck
                 if (Input.GetKey(KeyCode.LeftControl))
                 {
                     var ui = UIManager.GetInstance().GetUIBase(UIManager.ViewScene.CardAllList) as CardAllListUI;
-                    var filter = ui.GetFilterController();
+                    var filter = ui.GetField<FilterController>("_filter");
                     #region Cost
                     if (Input.GetKeyDown(KeyCode.Alpha1))
                     {

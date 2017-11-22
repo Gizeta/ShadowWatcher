@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using ShadowWatcher.Contract;
+using ShadowWatcher.Helper;
 using ShadowWatcher.Socket;
 using System;
 using Wizard;
@@ -32,9 +33,9 @@ namespace ShadowWatcher.Replay
                 gameMgr.IsAdmin = true;
             }
 
-            if (gameMgr.GetReplayControl() != repController)
+            if (gameMgr.GetProperty<ReplayController>("_ReplayControl") != repController)
             {
-                repController = gameMgr.GetReplayControl();
+                repController = gameMgr.GetProperty<ReplayController>("_ReplayControl");
 
                 if (repController != null)
                 {

@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using ShadowWatcher.Helper;
 using ShadowWatcher.Socket;
 using System;
 using System.Collections.Generic;
@@ -64,7 +65,7 @@ namespace ShadowWatcher.Deck
                 if (Input.GetKey(KeyCode.LeftControl))
                 {
                     var ui = UIManager.GetInstance().GetUIBase(UIManager.ViewScene.DeckCardEdit) as DeckCardEditUI;
-                    var filter = ui.GetFilterController();
+                    var filter = ui.GetField<FilterController>("_pagingFilter");
                     #region Cost
                     if (Input.GetKeyDown(KeyCode.Alpha1))
                     {

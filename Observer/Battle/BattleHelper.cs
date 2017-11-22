@@ -22,10 +22,5 @@ namespace ShadowWatcher.Battle
         {
             return int.Parse(o.ToString());
         }
-
-        public static NetworkBattleManagerBase GetBattleManager(this RealTimeNetworkBattleAgent agent)
-        {
-            return agent.GetField("networkBattleMgr").GetValue(agent) as NetworkBattleManagerBase;
-        }
     }
 }
