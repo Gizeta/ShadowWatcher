@@ -44,6 +44,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Asset\AssetModder.cs" />
+    <Compile Include="Asset\ModAssetHandle.cs" />
     <Compile Include="Battle\BattleHelper.cs" />
     <Compile Include="Battle\BattleManager.cs" />
     <Compile Include="Battle\PlayerMonitor.cs" />

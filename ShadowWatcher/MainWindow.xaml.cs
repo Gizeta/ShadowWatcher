@@ -84,6 +84,7 @@ namespace ShadowWatcher
                 case "Load":
                     Sender.Initialize(int.Parse(data));
                     Sender.Send("Setting", $"{Settings.ToString()}");
+                    Sender.Send("BasePath", AppDomain.CurrentDomain.BaseDirectory);
                     break;
                 case "EnemyPlay":
                 case "EnemyAdd":

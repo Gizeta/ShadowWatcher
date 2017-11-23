@@ -23,6 +23,7 @@ namespace ShadowWatcher
         public const int COPY_ANIMATED_CARD_FIRST = 0x10;
         public const int SHOW_COUNTDOWN = 0x20;
         public const int KEYBOARD_FILTER_SHORTCUT = 0x40;
+        public const int ENABLE_MOD = 0x80;
 
         public static bool RecordEnemyCard { get; set; } = true;
         public static bool RecordPlayerCard { get; set; } = true;
@@ -31,6 +32,7 @@ namespace ShadowWatcher
         public static bool CopyAnimatedCardFirst { get; set; } = true;
         public static bool ShowCountdown { get; set; } = true;
         public static bool KeyboardFilterShortcut { get; set; } = true;
+        public static bool EnableMod { get; set; } = true;
 
         public static void Parse(string data)
         {
@@ -42,6 +44,7 @@ namespace ShadowWatcher
             CopyAnimatedCardFirst = (flag & COPY_ANIMATED_CARD_FIRST) > 0;
             ShowCountdown = (flag & SHOW_COUNTDOWN) > 0;
             KeyboardFilterShortcut = (flag & KEYBOARD_FILTER_SHORTCUT) > 0;
+            EnableMod = (flag & ENABLE_MOD) > 0;
         }
 
         public static new string ToString()
@@ -54,6 +57,7 @@ namespace ShadowWatcher
             flag |= CopyAnimatedCardFirst ? COPY_ANIMATED_CARD_FIRST : 0;
             flag |= ShowCountdown ? SHOW_COUNTDOWN : 0;
             flag |= KeyboardFilterShortcut ? KEYBOARD_FILTER_SHORTCUT : 0;
+            flag |= EnableMod ? ENABLE_MOD : 0;
             return flag.ToString();
         }
     }

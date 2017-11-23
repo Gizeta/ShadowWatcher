@@ -127,6 +127,19 @@ namespace ShadowWatcher
             }
         }
 
+        public bool EnableMod
+        {
+            get => Settings.EnableMod;
+            set
+            {
+                if (Settings.EnableMod != value)
+                {
+                    Settings.EnableMod = value;
+                    NotifyPropertyChanged("EnableMod");
+                }
+            }
+        }
+
         public void Save()
         {
             var writer = new StreamWriter(new IsolatedStorageFileStream("setting", FileMode.Create, storage));

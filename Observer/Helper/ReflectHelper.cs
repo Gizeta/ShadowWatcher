@@ -24,23 +24,55 @@ namespace ShadowWatcher.Helper
                                            BindingFlags.Static |
                                            BindingFlags.Instance;
 
+        public static T GetField<T>(this Type type, string name, object target)
+        {
+            return (T)type.GetField(name, flags).GetValue(target);
+        }
+        public static void SetField(this Type type, string name, object target, object value)
+        {
+            type.GetField(name, flags).SetValue(target, value);
+        }
         public static T GetField<T>(this Object obj, string name)
         {
-            return (T)obj.GetType().GetField(name, flags).GetValue(obj);
+            return (T)obj.GetType().GetField<T>(name, obj);
+        }
+        public static void SetField(this Object obj, string name, object value)
+        {
+            obj.GetType().SetField(name, obj, value);
         }
 
+        public static T GetProperty<T>(this Type type, string name, object target)
+        {
+            return (T)type.GetProperty(name, flags).GetValue(target, null);
+        }
+        public static void SetProperty(this Type type, string name, object target, object value)
+        {
+            type.GetProperty(name, flags).SetValue(target, value, null);
+        }
         public static T GetProperty<T>(this Object obj, string name)
         {
-            return (T)obj.GetType().GetProperty(name, flags).GetValue(obj, null);
+            return (T)obj.GetType().GetProperty<T>(name, obj);
+        }
+        public static void SetProperty(this Object obj, string name, object value)
+        {
+            obj.GetType().SetProperty(name, obj, value);
         }
 
+        public static void InvokeMethod(this Type type, string name, object target, params object[] param)
+        {
+            type.GetMethod(name, flags | BindingFlags.OptionalParamBinding).Invoke(target, param);
+        }
+        public static T InvokeMethod<T>(this Type type, string name, object target, params object[] param)
+        {
+            return (T)type.GetMethod(name, flags | BindingFlags.OptionalParamBinding).Invoke(target, param);
+        }
         public static void InvokeMethod(this Object obj, string name, params object[] param)
         {
-            obj.GetType().GetMethod(name, flags | BindingFlags.OptionalParamBinding).Invoke(obj, param);
+            obj.GetType().InvokeMethod(name, obj, param);
         }
         public static T InvokeMethod<T>(this Object obj, string name, params object[] param)
         {
-            return (T)obj.GetType().GetMethod(name, flags | BindingFlags.OptionalParamBinding).Invoke(obj, param);
+            return obj.GetType().InvokeMethod<T>(name, obj, param);
         }
     }
 }

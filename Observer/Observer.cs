@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using ShadowWatcher.Asset;
 using ShadowWatcher.Battle;
 using ShadowWatcher.Deck;
 using ShadowWatcher.Replay;
@@ -23,8 +24,20 @@ namespace ShadowWatcher
 {
     public class Observer : MonoBehaviour
     {
+        public static Action OnTick;
+
         private BattleManager battleManager = new BattleManager();
         private ReplayManager replayManager = new ReplayManager();
+
+        public void Start()
+        {
+            InvokeRepeating("Tick", 0, 1);
+        }
+
+        private void Tick()
+        {
+            OnTick?.Invoke();
+        }
 
         public void Awake()
         {
@@ -67,16 +80,30 @@ namespace ShadowWatcher
 
         private void Receiver_OnReceived(string action, string data)
         {
-            switch (action)
+            try
             {
-                case "ReplayRequest":
-                    if (Settings.EnhanceReplay)
-                        replayManager.InjectReplay(data);
-                    break;
-                case "Setting":
-                    Settings.Parse(data);
-                    Sender.Send("Setting", $"{data}");
-                    break;
+                switch (action)
+                {
+                    case "ReplayRequest":
+                        if (Settings.EnhanceReplay)
+                            replayManager.InjectReplay(data);
+                        break;
+                    case "Setting":
+                        Settings.Parse(data);
+                        Sender.Send("Setting", $"{data}");
+                        break;
+                    case "BasePath":
+                        if (Settings.EnableMod)
+                        {
+                            var assetModder = new AssetModder(data);
+                            assetModder.SetUp();
+                        }
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Sender.Send("Error", $"{e.Message}\n{e.StackTrace}");
             }
         }
     }
