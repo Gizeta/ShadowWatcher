@@ -69,48 +69,43 @@ namespace ShadowWatcher.Deck
                     #region Cost
                     if (Input.GetKeyDown(KeyCode.Alpha1))
                     {
-                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 1);
+                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 2);
                         Sender.Send("Keyboard", "1");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha2))
                     {
-                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 2);
+                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 3);
                         Sender.Send("Keyboard", "2");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha3))
                     {
-                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 3);
+                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 4);
                         Sender.Send("Keyboard", "3");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha4))
                     {
-                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 4);
+                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 5);
                         Sender.Send("Keyboard", "4");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha5))
                     {
-                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 5);
+                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 6);
                         Sender.Send("Keyboard", "5");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha6))
                     {
-                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 6);
+                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 7);
                         Sender.Send("Keyboard", "6");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha7))
                     {
-                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 7);
+                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 8);
                         Sender.Send("Keyboard", "7");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha8))
                     {
-                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 8);
+                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 9);
                         Sender.Send("Keyboard", "8");
-                    }
-                    else if (Input.GetKeyDown(KeyCode.Alpha9))
-                    {
-                        filter.SwitchFilter(DeckUIHelper.FILTER_TYPE.COST, 0);
-                        Sender.Send("Keyboard", "9");
                     }
                     else if (Input.GetKeyDown(KeyCode.Alpha0))
                     {
