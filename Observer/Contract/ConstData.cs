@@ -39,7 +39,8 @@ namespace ShadowWatcher.Contract
             "龙",
             "死灵术士",
             "血族",
-            "主教"
+            "主教",
+            "复仇者"
         };
     }
 }

@@ -53,6 +53,7 @@ namespace ShadowWatcher.Battle
             {
                 _enemy = enemy;
 
+                _enemy.OnAddDeckEvent += Enemy_OnAddDeckEvent;
                 _enemy.OnAddHandCardEvent += Enemy_OnAddHandCardEvent;
                 _enemy.OnAddPlayCardEvent += Enemy_OnAddPlayCardEvent;
                 _enemy.OnSpellPlayEvent += Enemy_OnSpellPlayEvent;
@@ -72,6 +73,7 @@ namespace ShadowWatcher.Battle
             }
             if (_enemy != null)
             {
+                _enemy.OnAddDeckEvent -= Enemy_OnAddDeckEvent;
                 _enemy.OnAddHandCardEvent -= Enemy_OnAddHandCardEvent;
                 _enemy.OnAddPlayCardEvent -= Enemy_OnAddPlayCardEvent;
                 _enemy.OnSpellPlayEvent -= Enemy_OnSpellPlayEvent;
@@ -80,9 +82,14 @@ namespace ShadowWatcher.Battle
 
         #region BattleEnemy Events
 
+        private void Enemy_OnAddDeckEvent(BattleCardBase card)
+        {
+            Sender.Send("EnemyAdd", $"{CardData.Parse(card, true)}");
+        }
+
         private void Enemy_OnAddHandCardEvent(BattleCardBase card, NetworkCardPlaceState fromState, bool isOpen)
         {
-            if (fromState == NetworkCardPlaceState.None || fromState == NetworkCardPlaceState.Field)
+            if ((fromState == NetworkCardPlaceState.None && card.CardId > 900000000) || fromState == NetworkCardPlaceState.Field)
             {
                 Sender.Send("EnemyAdd", $"{CardData.Parse(card, true)}");
             }
