@@ -25,7 +25,7 @@
         Closed="Window_Closed">
     <Window.Resources>
         <local:AmountToColorConverter x:Key="AmountToColor"/>
-        <local:BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </Window.Resources>
     
     <Grid>
